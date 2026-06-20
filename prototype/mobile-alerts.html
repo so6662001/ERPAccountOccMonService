@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>移动端告警 · ERP账务正确性监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+body{background:#eef1f6}
+.mwrap{max-width:1080px;margin:30px auto;padding:0 20px;display:flex;gap:40px;justify-content:center;align-items:flex-start;flex-wrap:wrap}
+.phone{width:340px;background:#0f1d36;border-radius:38px;padding:12px;box-shadow:0 24px 60px rgba(15,29,54,.3)}
+.screen{background:#f3f5f9;border-radius:28px;overflow:hidden;height:680px;display:flex;flex-direction:column;position:relative}
+.statusbar{height:30px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:12px;font-weight:700}
+.notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:90px;height:18px;background:#0f1d36;border-radius:0 0 12px 12px;z-index:3}
+.mhead{background:linear-gradient(135deg,#1d4ed8,#2563eb);color:#fff;padding:14px 16px 16px}
+.mhead .t{font-size:17px;font-weight:700}
+.mhead .s{font-size:12px;color:#cfe0ff;margin-top:2px}
+.mtabs{display:flex;gap:4px;margin-top:12px}
+.mtabs button{flex:1;border:none;background:rgba(255,255,255,.16);color:#fff;border-radius:8px;padding:7px;font-size:12.5px;font-weight:600}
+.mtabs button.active{background:#fff;color:var(--primary-600)}
+.mlist{flex:1;overflow-y:auto;padding:12px}
+.mcard{background:#fff;border-radius:12px;padding:12px 13px;margin-bottom:10px;box-shadow:0 1px 3px rgba(16,30,54,.06);border-left:4px solid var(--danger)}
+.mcard.high{border-left-color:var(--warning)}
+.mcard.mid{border-left-color:var(--info)}
+.mcard .top{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.mcard .lvl{font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px;background:var(--danger);color:#fff}
+.mcard .lvl.high{background:var(--warning)}.mcard .lvl.mid{background:var(--info)}
+.mcard .ti{font-weight:700;font-size:14px;flex:1}
+.mcard .tm{font-size:11px;color:var(--muted)}
+.mcard .kv{font-size:12.5px;color:#5b6b88;line-height:1.8}
+.mcard .kv b{color:var(--text)}
+.mcard .hl{color:var(--danger);font-weight:700}
+.mcard .foot{display:flex;align-items:center;justify-content:space-between;margin-top:9px;padding-top:8px;border-top:1px solid var(--border-2)}
+.mcard .wx{font-size:11px;color:#2aae67;font-weight:600;display:flex;align-items:center;gap:4px}
+.mcard .act{font-size:12px;color:var(--primary-600);font-weight:600}
+.mtabbar{height:54px;background:#fff;border-top:1px solid var(--border);display:flex}
+.mtabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;color:var(--muted)}
+.mtabbar a.on{color:var(--primary-600)}
+.mtabbar a .bdg{position:relative}
+.mtabbar a .bdg::after{content:"7";position:absolute;top:-4px;right:-10px;background:var(--danger);color:#fff;font-size:9px;border-radius:8px;padding:0 4px}
+.caption{max-width:300px;color:var(--text-2);font-size:13.5px;line-height:1.9}
+.caption h2{font-size:20px;margin:0 0 6px}
+</style>
+</head>
+<body>
+<div class="mwrap">
+  <!-- 列表视图 -->
+  <div class="phone">
+    <div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>5G ▮▮▮ 100%</span></div>
+      <div class="mhead">
+        <div class="t">账务监测 · 告警</div>
+        <div class="s">生产环境 · 华东集群 · 待处理 7</div>
+        <div class="mtabs"><button class="active">待处理 7</button><button>处理中 3</button><button>已闭环</button></div>
+      </div>
+      <div class="mlist">
+        <div class="mcard">
+          <div class="top"><span class="lvl">严重</span><span class="ti">凭证借贷不平</span></div>
+          <div class="kv"><div><b>明远商贸</b> · V20260620-088</div><div>差额 <span class="hl">−¥1,200.00</span></div></div>
+          <div class="foot"><span class="wx">✓ 已推送企业微信</span><span class="tm">2 分钟前</span></div>
+        </div>
+        <div class="mcard">
+          <div class="top"><span class="lvl">严重</span><span class="ti">应付勾稽差额</span></div>
+          <div class="kv"><div><b>优享零售 T-0098</b></div><div>明细 ≠ 总账，差额 <span class="hl">−¥850.00</span></div></div>
+          <div class="foot"><span class="wx">✓ 已推送企业微信</span><span class="tm">18 分钟前</span></div>
+        </div>
+        <div class="mcard high">
+          <div class="top"><span class="lvl high">高</span><span class="ti">收入指标回归</span></div>
+          <div class="kv"><div><b>云联SaaS T-1203</b> · 迭代 v3.8</div><div>基线 1,250,000 → <span class="hl">1,252,000</span></div></div>
+          <div class="foot"><span class="wx">✓ 已推送企业微信</span><span class="tm">1 小时前</span></div>
+        </div>
+        <div class="mcard high">
+          <div class="top"><span class="lvl high">高</span><span class="ti">存货金额异常 3 笔</span></div>
+          <div class="kv"><div><b>优享零售 · 门店租户群</b></div><div>金额 ≠ 数量×单价</div></div>
+          <div class="foot"><span class="wx">✓ 已推送企业微信</span><span class="tm">2 小时前</span></div>
+        </div>
+        <div class="mcard mid">
+          <div class="top"><span class="lvl mid">中</span><span class="ti">汇率缺失 5 条</span></div>
+          <div class="kv"><div><b>恒泰物流</b> · 外币凭证未取到汇率</div></div>
+          <div class="foot"><span class="act">查看详情 ›</span><span class="tm">3 小时前</span></div>
+        </div>
+      </div>
+      <div class="mtabbar">
+        <a><svg width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>总览</a>
+        <a class="on"><span class="bdg"><svg width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>告警</a>
+        <a><svg width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>我的</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 详情视图 -->
+  <div class="phone">
+    <div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>5G ▮▮▮ 100%</span></div>
+      <div class="mhead" style="background:linear-gradient(135deg,#b42318,#d92d20)">
+        <div class="flex" style="gap:8px"><span style="font-size:18px">‹</span><div class="t" style="font-size:15px">告警详情</div></div>
+        <div class="s" style="color:#ffd9d4;margin-top:8px">严重 · 借贷不平 · 待处理</div>
+      </div>
+      <div class="mlist">
+        <div class="mcard" style="border-left-color:var(--danger)">
+          <div class="kv">
+            <div><b>客户：</b>明远商贸（cust_0188）</div>
+            <div><b>检查：</b>逐张凭证借贷平衡</div>
+            <div><b>凭证：</b>V20260620-088</div>
+            <div><b>借方：</b>¥38,800.00</div>
+            <div><b>贷方：</b>¥40,000.00</div>
+            <div><b>差额：</b><span class="hl">−¥1,200.00</span></div>
+            <div><b>会计期间：</b>2026-06</div>
+            <div><b>影响：</b>试算不平，报表风险</div>
+            <div><b>关联版本：</b>v3.8.2（疑似过账逻辑变更）</div>
+          </div>
+        </div>
+        <div class="mcard" style="border-left-color:var(--primary)">
+          <div class="top"><span class="ti" style="font-size:13px">违规凭证分录</span></div>
+          <div class="kv mono" style="font-size:11.5px">
+            <div>1122 应收　借 38,800.00</div>
+            <div>6001 收入　贷 40,000.00 ⚠</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button class="btn" style="flex:1;justify-content:center">转交</button>
+          <button class="btn primary" style="flex:1;justify-content:center">认领处理</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption">
+    <h2>移动端告警</h2>
+    <p>除企业微信卡片推送外，相关人员可在移动端 App / 企业微信工作台内查看告警列表与详情，支持<b>认领、转交、标记闭环</b>，随时随地处置账务风险。</p>
+    <p style="margin-top:14px"><a class="btn" href="alerts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回告警中心（Web）</a></p>
+  </div>
+</div>
+</body>
+</html>
