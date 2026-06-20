@@ -20,6 +20,8 @@ import com.puxun.monitor.rule.mapper.RuleSetItemMapper;
 import com.puxun.monitor.rule.version.VersionSpec;
 import com.puxun.monitor.result.domain.DetectRun;
 import com.puxun.monitor.result.mapper.DetectRunMapper;
+import com.puxun.monitor.alert.domain.Alert;
+import com.puxun.monitor.alert.mapper.AlertMapper;
 import com.puxun.monitor.security.support.SecurityUtils;
 import com.puxun.monitor.tenant.domain.Customer;
 import com.puxun.monitor.tenant.mapper.CustomerMapper;
@@ -50,6 +52,7 @@ public class RolloutService {
     private final RuleSetItemMapper ruleSetItemMapper;
     private final CustomerRuleMapper customerRuleMapper;
     private final DetectRunMapper detectRunMapper;
+    private final AlertMapper alertMapper;
     private final ObjectMapper om;
 
     // ---------------- 生命周期 ----------------
@@ -309,8 +312,14 @@ public class RolloutService {
         }
         BigDecimal errorRate = exec == 0 ? BigDecimal.ZERO
                 : BigDecimal.valueOf(err).divide(BigDecimal.valueOf(exec), 4, RoundingMode.HALF_UP);
-        // 误报率需人工反馈，暂置 0（预留反馈接口）
-        return new Metrics(exec, fail, err, errorRate, BigDecimal.ZERO);
+        // 误报率 = 人工标记误报数 / 命中失败数（来自告警反馈闭环）
+        long fpCount = alertMapper.selectCount(Wrappers.<Alert>lambdaQuery()
+                .in(Alert::getCustomerId, customerIds)
+                .eq(Alert::getFalsePositive, 1)
+                .ge(Alert::getCreatedAt, since));
+        BigDecimal fpRate = fail == 0 ? BigDecimal.ZERO
+                : BigDecimal.valueOf(fpCount).divide(BigDecimal.valueOf(fail), 4, RoundingMode.HALF_UP);
+        return new Metrics(exec, fail, err, errorRate, fpRate);
     }
 
     private List<RolloutBatch> batches(Long rolloutId) {

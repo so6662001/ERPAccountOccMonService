@@ -21,10 +21,35 @@ public class WecomClient {
 
     public record HttpResp(int status, String body) {}
 
+    private static final String BASE = "https://qyapi.weixin.qq.com/cgi-bin";
+
     public HttpResp sendWebhook(String webhookUrl, String jsonPayload) {
+        return post(webhookUrl, jsonPayload);
+    }
+
+    /** 自建应用：用 corpid + corpsecret 换取 access_token。 */
+    public HttpResp fetchAccessToken(String corpId, String corpSecret) {
+        try {
+            String url = BASE + "/gettoken?corpid=" + corpId + "&corpsecret=" + corpSecret;
+            HttpRequest req = HttpRequest.newBuilder().uri(URI.create(url))
+                    .timeout(Duration.ofSeconds(10)).GET().build();
+            HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+            return new HttpResp(resp.statusCode(), resp.body());
+        } catch (Exception e) {
+            log.warn("获取企业微信 access_token 失败: {}", e.getMessage());
+            return new HttpResp(-1, e.getMessage());
+        }
+    }
+
+    /** 自建应用：发送应用消息。 */
+    public HttpResp sendAppMessage(String accessToken, String jsonPayload) {
+        return post(BASE + "/message/send?access_token=" + accessToken, jsonPayload);
+    }
+
+    private HttpResp post(String url, String jsonPayload) {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create(webhookUrl))
+                    .uri(URI.create(url))
                     .timeout(Duration.ofSeconds(10))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
@@ -32,7 +57,7 @@ public class WecomClient {
             HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
             return new HttpResp(resp.statusCode(), resp.body());
         } catch (Exception e) {
-            log.warn("企业微信 webhook 推送失败: {}", e.getMessage());
+            log.warn("企业微信请求失败: {}", e.getMessage());
             return new HttpResp(-1, e.getMessage());
         }
     }

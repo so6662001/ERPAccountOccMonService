@@ -17,6 +17,31 @@ public class WecomMessageRenderer {
 
     private final ObjectMapper om;
 
+    /** 自建应用消息负载：{touser, agentid, msgtype, markdown/text:{content}} */
+    public String renderApp(AlertChannel ch, List<Alert> batch, String agentId, String toUser) {
+        boolean text = "TEXT".equals(ch.getMsgType());
+        StringBuilder content = new StringBuilder("账务正确性告警\n");
+        for (Alert a : batch) {
+            content.append("[").append(a.getSeverity()).append("] ").append(a.getTitle())
+                    .append("  规则:").append(a.getRuleKey()).append("\n");
+        }
+        try {
+            Map<String, Object> payload = new LinkedHashMap<>();
+            payload.put("touser", toUser != null ? toUser : "@all");
+            payload.put("agentid", agentId);
+            if (text) {
+                payload.put("msgtype", "text");
+                payload.put("text", Map.of("content", content.toString()));
+            } else {
+                payload.put("msgtype", "markdown");
+                payload.put("markdown", Map.of("content", content.toString()));
+            }
+            return om.writeValueAsString(payload);
+        } catch (Exception e) {
+            return "{}";
+        }
+    }
+
     public String render(AlertChannel ch, List<Alert> batch) {
         String type = ch.getMsgType() == null ? "MARKDOWN" : ch.getMsgType();
         try {

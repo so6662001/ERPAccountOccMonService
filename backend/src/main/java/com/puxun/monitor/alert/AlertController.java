@@ -59,6 +59,13 @@ public class AlertController {
         return ApiResult.ok();
     }
 
+    @Operation(summary = "标记误报（计入灰度误报率并关闭）")
+    @PostMapping("/alerts/{id}/false-positive")
+    public ApiResult<Void> falsePositive(@PathVariable Long id) {
+        alertService.markFalsePositive(id, SecurityUtils.currentUsernameOrSystem());
+        return ApiResult.ok();
+    }
+
     // ---- 移动端（数据与 Web 一致）----
 
     @Operation(summary = "移动端告警列表")

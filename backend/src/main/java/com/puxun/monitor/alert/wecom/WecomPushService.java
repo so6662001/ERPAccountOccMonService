@@ -5,6 +5,8 @@ import com.puxun.monitor.alert.domain.AlertChannel;
 import com.puxun.monitor.alert.domain.WecomPushLog;
 import com.puxun.monitor.alert.mapper.WecomPushLogMapper;
 import com.puxun.monitor.datasource.security.CipherService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class WecomPushService {
     private final WecomMessageRenderer renderer;
     private final WecomPushLogMapper logMapper;
     private final CipherService cipher;
+    private final WecomAppTokenCache tokenCache;
+    private final ObjectMapper om;
 
     public record PushResult(boolean ok, int httpStatus, String message) {}
 
@@ -32,23 +36,46 @@ public class WecomPushService {
         if (batch == null || batch.isEmpty()) {
             return new PushResult(true, 200, "无需推送");
         }
+        Sent sent = "APP".equals(ch.getType()) ? pushApp(ch, batch) : pushWebhook(ch, batch);
+        boolean ok = sent.resp != null && sent.resp.status() >= 200 && sent.resp.status() < 300;
+        log(ch, batch, sent.payload, sent.resp);
+        return new PushResult(ok, sent.resp == null ? -1 : sent.resp.status(), ok ? "送达" : "推送失败");
+    }
+
+    private record Sent(String payload, WecomClient.HttpResp resp) {}
+
+    private Sent pushWebhook(AlertChannel ch, List<Alert> batch) {
         String payload = renderer.render(ch, batch);
-        WecomClient.HttpResp resp = null;
-        if ("WEBHOOK".equals(ch.getType())) {
-            String url = cipher.decrypt(ch.getConfigCipher());
-            // 网络/5xx 重试 3 次
+        String url = cipher.decrypt(ch.getConfigCipher());
+        WecomClient.HttpResp resp = new WecomClient.HttpResp(-1, "init");
+        for (int attempt = 1; attempt <= 3; attempt++) {       // 网络/5xx 重试 3 次
+            resp = client.sendWebhook(url, payload);
+            if (resp.status() >= 200 && resp.status() < 300) break;
+            sleep(attempt * 200L);
+        }
+        return new Sent(payload, resp);
+    }
+
+    /** 自建应用推送：解析配置 → 取 token(缓存) → 发送应用消息。 */
+    private Sent pushApp(AlertChannel ch, List<Alert> batch) {
+        try {
+            JsonNode cfg = om.readTree(cipher.decrypt(ch.getConfigCipher()));
+            String corpId = cfg.path("corpId").asText();
+            String corpSecret = cfg.path("corpSecret").asText();
+            String agentId = cfg.path("agentId").asText();
+            String toUser = cfg.hasNonNull("toUser") ? cfg.get("toUser").asText() : "@all";
+            String token = tokenCache.get(corpId, corpSecret);
+            String payload = renderer.renderApp(ch, batch, agentId, toUser);
+            WecomClient.HttpResp resp = new WecomClient.HttpResp(-1, "init");
             for (int attempt = 1; attempt <= 3; attempt++) {
-                resp = client.sendWebhook(url, payload);
+                resp = client.sendAppMessage(token, payload);
                 if (resp.status() >= 200 && resp.status() < 300) break;
                 sleep(attempt * 200L);
             }
-        } else {
-            // APP 自建应用消息：后续接入 access_token 流程
-            resp = new WecomClient.HttpResp(-1, "APP 通道待接入");
+            return new Sent(payload, resp);
+        } catch (Exception e) {
+            return new Sent("{\"error\":\"app\"}", new WecomClient.HttpResp(-1, e.getMessage()));
         }
-        boolean ok = resp != null && resp.status() >= 200 && resp.status() < 300;
-        log(ch, batch, payload, resp);
-        return new PushResult(ok, resp == null ? -1 : resp.status(), ok ? "送达" : "推送失败");
     }
 
     public PushResult test(AlertChannel ch) {

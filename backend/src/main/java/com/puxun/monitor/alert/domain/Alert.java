@@ -23,5 +23,6 @@ public class Alert extends BaseEntity {
     private String status;            // PENDING|PROCESSING|CLOSED
     private String assignee;
     private String wecomPushStatus;   // SENT|FAILED|SILENCED|MERGED
+    private Integer falsePositive;    // 1=人工标记误报
     private Instant closedAt;
 }

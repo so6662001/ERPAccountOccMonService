@@ -14,7 +14,15 @@ Java 17 + Spring Boot 3.2 + MyBatis-Plus + Flyway + Spring Security(JWT) + Redis
 - M7 ✅ **趋势与统计聚合 API**：总览 KPI、通过率趋势、失败按类别时间序列、Top 失败规则、各行业健康度、告警 MTTR、单客户健康趋势（为前端 Dashboard/Analytics 提供数据）。
 - M8 ✅ 加固：**租户隔离单 SQL 聚合扫描**(一次定位异常租户) + 调度**分布式锁**(Redis，fail-open) + 违规**样本脱敏** + **H2 端到端引擎测试**(真实 SQL，5 机制+租户扫描) + OpenAPI 信息/Bearer 鉴权声明。
 
-> 至此 M1–M8 全部完成，共 33 个单测通过。后端覆盖认证审计、数据底座、规则引擎、运行闭环、回归告警、灰度发布、趋势统计与加固。
+> 至此 M1–M8 全部完成。后端覆盖认证审计、数据底座、规则引擎、运行闭环、回归告警、灰度发布、趋势统计与加固。
+
+## 增强（前端/E2E/企微）
+- **前端**：`frontend/`（Vue3 + Element Plus）对接全部接口、还原原型。
+- **端到端集成测试**：`PlatformE2ETest`（Testcontainers MySQL + Flyway 全量 + Spring 全上下文；无 Docker 自动跳过）。
+- **企业微信自建应用通道**：access_token 缓存/提前刷新 + 应用消息发送（除群机器人 Webhook 外）。
+- **误报反馈闭环**：告警「标记误报」(`POST /alerts/{id}/false-positive`) → 计入灰度发布**误报率**自动回滚判定。
+
+测试：`mvn test`（37 run / 2 skipped / 0 fail）。
 
 ## 已实现（M1）
 - 统一返回体 `ApiResult` / 分页 `PageResult` / 全局异常 / TraceId。

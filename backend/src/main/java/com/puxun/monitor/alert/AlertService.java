@@ -149,6 +149,16 @@ public class AlertService {
         alertMapper.updateById(a);
     }
 
+    /** 人工标记误报：用于灰度发布的误报率计算，并关闭该告警。 */
+    public void markFalsePositive(Long id, String user) {
+        Alert a = mustGet(id);
+        a.setFalsePositive(1);
+        a.setStatus("CLOSED");
+        a.setClosedAt(Instant.now());
+        if (a.getAssignee() == null) a.setAssignee(user);
+        alertMapper.updateById(a);
+    }
+
     public IPage<Alert> query(String status, String severity, Long customerId, long page, long size) {
         return alertMapper.selectPage(new Page<>(page, size),
                 Wrappers.<Alert>lambdaQuery()
