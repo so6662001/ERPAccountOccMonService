@@ -1,0 +1,39 @@
+---
+description: 普讯科技产品应用数据监测平台 — 项目总纲与核心原则（始终生效）
+alwaysApply: true
+---
+
+# 普讯科技产品应用数据监测平台 — 总纲
+
+## 产品定位
+在系统持续迭代的前提下，守住 ERP 账务数据的正确性：把"必须永远成立的账务恒等式"形式化为可执行的检查规则，在「生产持续巡检」+「迭代发布前回归门禁」两个时机校验，发现问题即按级别推送企业微信，将研发迭代引入的账务错误挡在生产之外。面向云化多客户/多租户。
+
+## 必须始终遵守的核心原则
+1. **只读安全**：对业务库仅 SELECT，绝不写业务库；优先只读副本；连接池按客户隔离限流。平台自身数据写入独立的平台库。
+2. **两种隔离模式**：独立数据库（每客户一套库）+ 租户隔离（同库按 `tenant_id`，查询自动注入租户过滤）。
+3. **高效检测**：租户隔离优先"单条聚合 SQL 跨全租户扫描 + 仅异常租户下钻"，避免逐租户 N 次查询；独立库按客户并行。
+4. **规则与产品版本挂钩**：规则可声明 适用产品线 + 生效版本表达式(如 `>=v4.0`、`[v3.2,v9.0)`) + 适用服务器；执行前按客户当前部署版本判定生效（旧版本不误报、新规则随升级自动生效）。
+5. **声明式规则**：规则以 JSON/YAML 落库，支持 5 种检查机制，业务人员无需写代码即可增改。
+6. **全程留痕**：规则变更、模板套用、灰度发布、基线重置等关键操作写入不可篡改的审计日志。
+7. **金额安全**：金额用 BigDecimal/DECIMAL，比较一律带容差(默认 0.005)，**禁止用 double 做账务比较**。
+
+## 5 种检查机制
+- `scalar_zero`：某 SQL 标量须约等于 0（全局 Σ借−Σ贷=0）
+- `scalar_equality`：两段 SQL 标量须相等（应收明细=应收总账余额）
+- `scalar_range`：某标量须落在[min,max]（单位成本≥0；也作不变量指标载体）
+- `rows_empty`：违规明细查询须返回 0 行（逐凭证不平/孤儿单据/连续性断裂；失败抽样返回违规记录）
+- `cross_system_scalar_equality`：跨两个数据源标量须相等（订单系统应收=财务系统应收）
+
+## 约束类别与级别
+- 类别：平衡 balance / 勾稽 reconciliation / 连续性 continuity / 成本 cost / 完整性 integrity / 跨系统 cross_system / 迭代回归 regression
+- 级别(兼作门禁阈值，越大越严重)：INFO < LOW < MEDIUM < HIGH < CRITICAL；出现 ≥ 门禁级别的失败即整体失败/阻断发布。
+
+## 技术栈
+- 后端：Java 17 + Spring Boot 3.x + Spring Security + MyBatis-Plus/JPA + 动态多数据源(AbstractRoutingDataSource+HikariCP) + Quartz/XXL-Job + Flyway + Redis + SpringDoc。
+- 前端：Vue3 + TypeScript + Vite + Element Plus + Pinia + Vue Router + Axios + ECharts，UI 还原 `prototype/`。
+
+## 工作方式
+- 编写完整可运行代码，补齐异常/边界/空值/并发/事务，不省略关键逻辑。
+- 需求与上述原则冲突时，先指出风险再实现。
+- 每完成一个模块，对照 `docs/AI开发提示词.md` §7 的逻辑完整性检查清单自检并补齐。
+- 参考：`docs/AI开发提示词.md`(提示词包)、`docs/ARCHITECTURE.md`(方法论)、`prototype/`(22 页原型)、`erp_acc_monitor/`(Python 引擎参考)。

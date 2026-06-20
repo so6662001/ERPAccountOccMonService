@@ -5,6 +5,9 @@
 > 技术栈：**后端 Java 17 + Spring Boot 3.x**，**前端 Vue3 + TypeScript + Element Plus + Pinia + Vite + ECharts**。
 >
 > 配套：高保真原型在 `prototype/`（22 页，从 `login.html` 进入）；账务校验方法论在 `docs/ARCHITECTURE.md`；可运行的校验引擎参考实现在 `erp_acc_monitor/`（Python，仅供逻辑参考）。
+>
+> 项目规则（Cursor 自动加载）：`.cursor/rules/`（总纲、只读安全与多租户、后端、前端）。
+> 核心模块方法/类级详设：`docs/模块详设-规则引擎.md`、`docs/模块详设-灰度发布引擎.md`。
 
 ---
 

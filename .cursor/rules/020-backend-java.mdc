@@ -1,0 +1,19 @@
+---
+description: 后端 Java/Spring Boot 编码规范
+globs: backend/**,**/*.java
+alwaysApply: false
+---
+
+# 后端编码规范（Java 17 + Spring Boot 3）
+
+- 分层：controller / service / mapper(repository) / domain(entity) / dto；DTO 与实体分离，禁止实体直出。
+- 统一返回体 `ApiResult<T>{ code, message, data, traceId }`；分页 `PageResult<T>{ records, total, page, size }`。
+- 全局异常处理 `@RestControllerAdvice`；业务异常用受检的 `BizException(code,msg)`。
+- 列表接口统一支持 `page/size/keyword/排序/筛选`。
+- 枚举集中定义并与前端共享：IsolationMode/DbType/RuleCategory/RuleType/Severity/CheckStatus/TriggerType/RolloutStatus/AlertStatus/SyncDecision。
+- 金额 `BigDecimal`；时间 UTC 存储(`Instant`/`OffsetDateTime`)，接口返回 ISO8601。
+- 写操作加审计：注解 `@Audited(action=...)`，由切面写 `audit_log`（只追加）。
+- 数据库迁移用 Flyway；高频查询字段建索引（customer_id, rule_key, run_id, period, status, created_at）。
+- 接口出 OpenAPI(SpringDoc)；关键逻辑(版本判定、引擎、回归、灰度)必须有单元测试。
+- 调度任务用分布式锁(Redis/Redisson)防重复执行；外部 IO(企业微信/业务库)做超时与重试。
+- 校验机制(5 种)用策略模式，单条规则异常隔离为 ERROR，不中断整体运行。

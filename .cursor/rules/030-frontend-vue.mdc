@@ -1,0 +1,16 @@
+---
+description: 前端 Vue3 + Element Plus 编码规范
+globs: frontend/**,**/*.vue,**/*.ts
+alwaysApply: false
+---
+
+# 前端编码规范（Vue3 + TS + Element Plus）
+
+- 组合式 API + `<script setup lang="ts">`；状态用 Pinia；路由 Vue Router；请求 Axios 封装统一拦截(注入 token、处理 ApiResult、错误提示)。
+- UI 还原 `prototype/` 各页面与设计令牌（深色侧边栏 + Element Plus 蓝，沿用 `prototype/assets/style.css` 的颜色/圆角/阴影变量）。
+- 页面与原型一一对应（见 `docs/AI开发提示词.md` §6 对照表）。
+- 复用组件：SeverityTag、StatusTag、ModePill、SqlEditor(只读高亮)、VersionExprInput、JsonViewer、PhonePreview(企业微信卡片)、图表(折线/堆叠柱/热力)、EmptyState/Skeleton/ErrorState/ResultToast。
+- 统一三态：列表加载用骨架屏、无数据用空态、失败用错误态（参考 `prototype/ui-states.html`）。
+- 危险操作(回滚/全量发布/重置基线)二次确认；按钮按权限禁用并提示原因。
+- 图表用 ECharts；金额/数字本地化格式化；时间按用户时区展示。
+- TypeScript 类型与后端枚举/DTO 对齐，集中在 `src/types`。
