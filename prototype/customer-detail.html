@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>客户详情 · ERP账务正确性监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">账</div><div><div class="name">账务监测平台</div><div class="sub">ERP Account Correctness</div></div></div>
+    <nav class="nav">
+      <div class="group">监测中心</div>
+      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>监控总览</a>
+      <a class="active" href="tenants.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>客户与租户<span class="count">36</span></a>
+      <a href="rules.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>检查规则<span class="count">128</span></a>
+      <a href="rule-templates.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>规则模板库</a>
+      <a href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 17l2-2 2 2 3-4"/></svg>检测结果</a>
+      <div class="group">运维与发布</div>
+      <a href="datasources.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>数据源</a>
+      <a href="tasks.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>检测任务</a>
+      <a href="baselines.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>基线管理</a>
+      <a href="rollout.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>灰度发布</a>
+      <a href="audit.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>权限与审计</a>
+      <div class="group">告警与通知</div>
+      <a href="alerts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>告警中心<span class="count danger">7</span></a>
+      <a href="wecom.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>企业微信通知</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb"><a href="tenants.html">客户与租户</a> / <b>明远商贸</b></div>
+      <div class="spacer"></div>
+      <a class="btn" href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M3.5 9a9 9 0 0 1 14.8-3.4L23 10"/></svg>立即检测</a>
+      <a class="btn primary" href="tenant-edit.html">配置</a>
+    </header>
+
+    <div class="content">
+      <!-- 客户头部 -->
+      <div class="card card-bd mb12" style="display:flex;align-items:center;gap:18px">
+        <div style="width:54px;height:54px;border-radius:14px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;font-size:20px;font-weight:800">明</div>
+        <div>
+          <div class="flex" style="gap:10px"><h1 style="margin:0;font-size:20px">明远商贸有限公司</h1><span class="tag critical"><span class="dot"></span>严重</span></div>
+          <div class="flex" style="gap:8px;margin-top:8px;flex-wrap:wrap">
+            <span class="mode-pill db">独立数据库</span><span class="tag outline">商贸</span><span class="tag outline mono">cust_0188</span><span class="tag outline">Oracle 19c</span><span class="tag blue">v3.8.2</span><span class="tag warning" style="background:#fff7e6">🥇 金牌 SLA</span>
+          </div>
+        </div>
+        <div class="spacer"></div>
+        <div style="text-align:right"><div class="text-muted fz12">当前会计期间</div><div style="font-size:18px;font-weight:800" class="mono">2026-06</div><div class="fz12 text-muted">进行中</div></div>
+      </div>
+
+      <div class="tabs"><a class="active">概览</a><a href="rules.html">规则（58）</a><a href="results.html">检测历史</a><a href="datasources.html">数据源</a><a href="baselines.html">基线</a></div>
+
+      <div class="grid k4" style="margin-bottom:16px">
+        <div class="card kpi"><div class="label">健康度</div><div class="value text-danger">94.8%</div><div class="delta down">低于金牌阈值 99.9%</div></div>
+        <div class="card kpi"><div class="label">当前失败</div><div class="value text-danger">3</div><div class="delta down">严重 1 · 高 2</div></div>
+        <div class="card kpi"><div class="label">启用规则</div><div class="value">58</div><div class="delta">商贸标准集 + 通用集</div></div>
+        <div class="card kpi"><div class="label">最近检测</div><div class="value" style="font-size:20px">2 分钟前</div><div class="delta">每 10 分钟</div></div>
+      </div>
+
+      <div class="cols" style="margin-bottom:16px">
+        <div class="card">
+          <div class="card-hd"><h3>健康度趋势（近 14 天）</h3><div class="spacer"></div><a class="btn link" href="analytics.html">趋势分析 →</a></div>
+          <div class="card-bd">
+            <div class="spark" style="height:90px"><i style="height:96%"></i><i style="height:98%"></i><i style="height:94%"></i><i style="height:99%"></i><i style="height:97%"></i><i style="height:99%"></i><i class="hi" style="height:100%"></i><i style="height:98%"></i><i style="height:96%"></i><i class="warn" style="height:62%"></i><i style="height:80%"></i><i style="height:92%"></i><i class="warn" style="height:90%"></i><i class="warn" style="height:88%"></i></div>
+            <div class="hint" style="text-align:center;margin-top:8px">v3.8 发布后出现回落，近 3 日借贷不平/应付勾稽反复</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hd"><h3>账簿 / 币种 / 合并</h3></div>
+          <div class="card-bd" style="font-size:13px">
+            <div class="flex between" style="padding:7px 0;border-bottom:1px solid var(--border-2)"><span class="text-muted">多账簿</span><span>主账簿 · IFRS · 税务（均监测）</span></div>
+            <div class="flex between" style="padding:7px 0;border-bottom:1px solid var(--border-2)"><span class="text-muted">本位币</span><span>CNY · 外币 USD/HKD</span></div>
+            <div class="flex between" style="padding:7px 0;border-bottom:1px solid var(--border-2)"><span class="text-muted">外币折算校验</span><span class="tag success">已启用</span></div>
+            <div class="flex between" style="padding:7px 0;border-bottom:1px solid var(--border-2)"><span class="text-muted">合并口径</span><span>纳入集团合并（二级子公司）</span></div>
+            <div class="flex between" style="padding:7px 0"><span class="text-muted">抵消规则集</span><span class="tag warning" style="background:#fdf3e2">待沉淀</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cols">
+        <div class="card">
+          <div class="card-hd"><h3>当前未通过检查</h3><div class="spacer"></div><a class="btn link" href="results.html">运行详情 →</a></div>
+          <div class="card-bd flush">
+            <table class="table">
+              <tbody>
+                <tr><td><span class="tag critical">严重</span></td><td><div class="cell-main">逐张凭证借贷平衡</div><div class="cell-sub">V20260620-088 差额 −¥1,200</div></td><td><span class="tag success">已推送</span></td></tr>
+                <tr><td><span class="tag warning">高</span></td><td><div class="cell-main">应付明细 = 总账余额</div><div class="cell-sub">差额 −¥850</div></td><td><span class="tag success">已推送</span></td></tr>
+                <tr><td><span class="tag warning">高</span></td><td><div class="cell-main">存货金额 = 数量×单价</div><div class="cell-sub">2 笔偏差</div></td><td><span class="tag success">已推送</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hd"><h3>近期检测</h3></div>
+          <div class="card-bd">
+            <div class="timeline">
+              <div class="item err"><div class="flex between"><b>定时巡检</b><span class="tag danger">3 失败</span></div><div class="t">58 检查 · 2 分钟前</div></div>
+              <div class="item ok"><div class="flex between"><b>定时巡检</b><span class="tag success">全通过</span></div><div class="t">12 分钟前</div></div>
+              <div class="item warn"><div class="flex between"><b>CI 发布门禁 v3.8</b><span class="tag warning">1 回归</span></div><div class="t">收入指标回归 · 6/18</div></div>
+              <div class="item ok"><div class="flex between"><b>月结巡检 2026-05</b><span class="tag success">全通过</span></div><div class="t">6/05</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>规则历史 · ERP账务正确性监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.sxs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sxs .pane{border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.sxs .pane h5{margin:0;padding:8px 12px;font-size:12px;background:#fafbfd;border-bottom:1px solid var(--border-2);color:var(--text-2);display:flex;justify-content:space-between}
+.sxs pre{margin:0;padding:12px;font-family:"SF Mono",Consolas,monospace;font-size:12px;line-height:1.8;white-space:pre-wrap}
+.dl{color:#b42318;background:#fdeceb} .ad{color:#067647;background:#e8f7ee}
+.vrow{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-2)}
+.vrow:last-child{border-bottom:none}
+.vdot{width:34px;height:34px;border-radius:9px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;font-weight:700;font-size:12px;flex-shrink:0}
+.vrow.cur .vdot{background:var(--success);color:#fff}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">账</div><div><div class="name">账务监测平台</div><div class="sub">ERP Account Correctness</div></div></div>
+    <nav class="nav">
+      <div class="group">监测中心</div>
+      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>监控总览</a>
+      <a href="tenants.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>客户与租户<span class="count">36</span></a>
+      <a class="active" href="rules.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>检查规则<span class="count">128</span></a>
+      <a href="rule-templates.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>规则模板库</a>
+      <a href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 17l2-2 2 2 3-4"/></svg>检测结果</a>
+      <div class="group">运维与发布</div>
+      <a href="datasources.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>数据源</a>
+      <a href="tasks.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>检测任务</a>
+      <a href="baselines.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>基线管理</a>
+      <a href="rollout.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>灰度发布</a>
+      <a href="audit.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>权限与审计</a>
+      <div class="group">告警与通知</div>
+      <a href="alerts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>告警中心<span class="count danger">7</span></a>
+      <a href="wecom.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>企业微信通知</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb"><a href="rules.html">检查规则</a> / <a href="rule-edit.html">应收勾稽</a> / <b>历史版本</b></div>
+      <div class="spacer"></div>
+      <a class="btn" href="rule-edit.html">返回编辑</a>
+    </header>
+
+    <div class="content">
+      <div class="page-head"><div><h1>历史版本 · 应收明细合计 = 应收总账余额</h1><p><span class="mono">reconciliation.ar_control</span> · 共 6 个版本 · 当前生效 v3</p></div></div>
+
+      <div class="cols">
+        <!-- 版本列表 -->
+        <div class="card">
+          <div class="card-hd"><h3>版本时间线</h3></div>
+          <div class="card-bd">
+            <div class="vrow cur"><div class="vdot">v3</div><div style="flex:1"><div class="flex between"><b>v3 · 当前生效</b><span class="tag success">运行中</span></div><div class="t fz12 text-muted">王工 · 2026-06-18 · 容差 0.01→0.005，级别 HIGH→CRITICAL</div></div></div>
+            <div class="vrow"><div class="vdot">v2</div><div style="flex:1"><div class="flex between"><b>v2</b><button class="btn link" style="padding:0">回滚到此版本</button></div><div class="t fz12 text-muted">李工 · 2026-04-10 · 增加 tenant_id 过滤</div></div></div>
+            <div class="vrow"><div class="vdot">v1</div><div style="flex:1"><div class="flex between"><b>v1 · 初始（源自模板）</b><button class="btn link" style="padding:0">回滚到此版本</button></div><div class="t fz12 text-muted">系统 · 2026-02-01 · 由商贸标准集生成</div></div></div>
+          </div>
+        </div>
+
+        <!-- 对比控制 -->
+        <div class="card" style="height:fit-content">
+          <div class="card-hd"><h3>版本对比</h3></div>
+          <div class="card-bd">
+            <div class="flex" style="gap:10px;margin-bottom:6px">
+              <select class="select"><option>v2（基线）</option><option>v1</option></select>
+              <span style="align-self:center">→</span>
+              <select class="select"><option>v3（当前）</option><option>v2</option></select>
+            </div>
+            <div class="fz12 text-muted">选择两个版本查看差异，可一键回滚到任意历史版本（回滚将生成新版本并记入审计）</div>
+            <div class="divider"></div>
+            <div class="flex" style="gap:8px"><span class="tag warning">2 处变更</span><span class="tag outline">容差 · 级别</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 差异详情 -->
+      <div class="card" style="margin-top:16px">
+        <div class="card-hd"><h3>v2 → v3 差异</h3><div class="spacer"></div><button class="btn">导出</button><a class="btn danger" href="#">回滚到 v2</a></div>
+        <div class="card-bd">
+          <div class="sxs">
+            <div class="pane"><h5><span>v2</span><span class="text-muted">2026-04-10</span></h5><pre><span class="k">key</span>: reconciliation.ar_control
+<span class="k">type</span>: scalar_equality
+<span class="k">severity</span>: <span class="dl">HIGH</span>
+<span class="k">tolerance</span>: <span class="dl">0.01</span>
+<span class="k">scope.version</span>: ">= v3.0"
+<span class="k">left_sql</span>: "SELECT SUM(amount) FROM ar_detail WHERE period=:period AND tenant_id=:tenant_id"
+<span class="k">right_sql</span>: "SELECT closing FROM gl_account_balance WHERE account_code='1122' ..."</pre></div>
+            <div class="pane"><h5><span>v3 · 当前</span><span class="text-muted">2026-06-18</span></h5><pre><span class="k">key</span>: reconciliation.ar_control
+<span class="k">type</span>: scalar_equality
+<span class="k">severity</span>: <span class="ad">CRITICAL</span>
+<span class="k">tolerance</span>: <span class="ad">0.005</span>
+<span class="k">scope.version</span>: ">= v3.0"
+<span class="k">left_sql</span>: "SELECT SUM(amount) FROM ar_detail WHERE period=:period AND tenant_id=:tenant_id"
+<span class="k">right_sql</span>: "SELECT closing FROM gl_account_balance WHERE account_code='1122' ..."</pre></div>
+          </div>
+          <div class="note" style="margin-top:12px"><b>变更摘要：</b>严重级别 HIGH → <b>CRITICAL</b>（命中即阻断结账并即时推送）；容差 0.01 → <b>0.005</b>（更严格）。回滚到 v2 将放宽为 HIGH/0.01，请评估对结账门禁的影响。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
