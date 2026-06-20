@@ -2,7 +2,12 @@
 
 Java 17 + Spring Boot 3.2 + MyBatis-Plus + Flyway + Spring Security(JWT) + Redis。
 
-> 按 `docs/AI开发提示词.md` 的里程碑推进，当前已完成 **M1 地基**：工程骨架、平台库 Flyway 迁移、统一返回体/异常/枚举、认证与 RBAC（JWT）、审计切面。
+> 按 `docs/AI开发提示词.md` 的里程碑推进。已完成 **M1 地基**、**M2 数据底座**、**M3 规则核心(引擎+版本)**。
+
+## 进度
+- M1 ✅ 工程骨架、平台库 Flyway、统一返回体/异常/枚举、认证与 RBAC(JWT)、审计切面。
+- M2 ✅ 动态多数据源(只读副本/连接池隔离/探活)、AES 口令加密、JSqlParser 只读校验、只读访问门面、数据源管理、客户与租户(账簿/币种/合并口径)、自动发现租户。
+- M3 ✅(核心) 版本生效判定(VersionSpec/VersionGate)、检查引擎(5 机制执行器 + 异常隔离 + 门禁)、规则 CRUD/版本化/回滚。M3 待续：规则集/模板库/一键套用、租户聚合扫描优化。
 
 ## 已实现（M1）
 - 统一返回体 `ApiResult` / 分页 `PageResult` / 全局异常 / TraceId。
