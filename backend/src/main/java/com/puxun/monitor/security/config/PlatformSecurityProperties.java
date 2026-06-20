@@ -11,6 +11,8 @@ public class PlatformSecurityProperties {
 
     private Jwt jwt = new Jwt();
     private BootstrapAdmin bootstrapAdmin = new BootstrapAdmin();
+    /** 业务库口令加密密钥(Base64, 16/24/32 字节)。生产务必通过环境变量注入。 */
+    private String cipherKey = "MDEyMzQ1Njc4OWFiY2RlZg==";
 
     @Data
     public static class Jwt {
