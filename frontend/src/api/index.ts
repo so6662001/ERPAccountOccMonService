@@ -72,6 +72,12 @@ export const alertApi = {
   testChannel: (id: number) => http.post(`/alert-channels/${id}/test`),
 }
 
+export const templateSyncApi = {
+  diff: (customerId: number, templateId: number) =>
+    http.get('/template-sync/diff', { params: { customerId, templateId } }) as Promise<any>,
+  apply: (cmd: any) => http.post('/template-sync/apply', cmd),
+}
+
 export const analyticsApi = {
   overview: () => http.get('/analytics/overview') as Promise<any>,
   passRateTrend: (days = 14) => http.get('/analytics/pass-rate-trend', { params: { days } }) as Promise<any[]>,

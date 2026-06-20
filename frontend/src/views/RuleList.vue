@@ -7,6 +7,8 @@
         <el-option v-for="c in categories" :key="c" :label="c" :value="c" />
       </el-select>
       <el-button type="primary" @click="load">查询</el-button>
+      <div class="spacer" style="flex:1"></div>
+      <el-button type="primary" @click="$router.push('/rules/edit')">新建规则</el-button>
     </div>
     <el-table :data="rows" v-loading="loading">
       <el-table-column label="规则">
@@ -21,8 +23,11 @@
       <el-table-column label="状态" width="90">
         <template #default="{ row }"><el-tag size="small" :type="row.enabled?'success':'info'">{{ row.enabled?'启用':'停用' }}</el-tag></template>
       </el-table-column>
-      <el-table-column label="操作" width="120">
-        <template #default="{ row }"><el-button link type="primary" @click="showVersions(row)">历史</el-button></template>
+      <el-table-column label="操作" width="170">
+        <template #default="{ row }">
+          <el-button link type="primary" @click="$router.push({ path: '/rules/edit', query: { key: row.ruleKey } })">编辑</el-button>
+          <el-button link type="primary" @click="showVersions(row)">历史</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <el-pagination style="margin-top:12px" layout="total, prev, pager, next" :total="total"

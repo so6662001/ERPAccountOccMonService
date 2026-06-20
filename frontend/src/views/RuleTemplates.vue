@@ -9,7 +9,10 @@
         </template>
         <div class="muted">行业：{{ t.industry || '-' }} · 产品线：{{ t.productLine || '-' }}</div>
         <div class="muted">模板版本：v{{ t.version }}</div>
-        <el-button style="margin-top:10px" type="primary" plain size="small" @click="viewItems(t)">查看明细</el-button>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <el-button type="primary" plain size="small" @click="viewItems(t)">查看明细</el-button>
+          <el-button size="small" @click="$router.push({ path: '/template-diff', query: { templateId: t.id } })">差异同步</el-button>
+        </div>
       </el-card>
     </el-col>
   </el-row>

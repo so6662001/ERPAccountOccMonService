@@ -10,6 +10,8 @@
         <el-menu-item index="/customers"><el-icon><OfficeBuilding /></el-icon><span>客户与租户</span></el-menu-item>
         <el-menu-item index="/rules"><el-icon><Finished /></el-icon><span>检查规则</span></el-menu-item>
         <el-menu-item index="/templates"><el-icon><Files /></el-icon><span>规则模板库</span></el-menu-item>
+        <el-menu-item index="/datasources"><el-icon><Coin /></el-icon><span>数据源</span></el-menu-item>
+        <el-menu-item index="/tasks"><el-icon><Timer /></el-icon><span>检测任务</span></el-menu-item>
         <el-menu-item index="/runs"><el-icon><Document /></el-icon><span>检测结果</span></el-menu-item>
         <el-menu-item index="/analytics"><el-icon><TrendCharts /></el-icon><span>趋势与统计</span></el-menu-item>
         <el-menu-item index="/rollouts"><el-icon><Promotion /></el-icon><span>灰度发布</span></el-menu-item>
