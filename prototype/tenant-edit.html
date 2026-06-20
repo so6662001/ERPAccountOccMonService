@@ -100,9 +100,12 @@
               <div class="form-row"><label class="req">合并报表口径</label><div class="field">
                 <div class="inline" style="margin-bottom:8px"><span class="tag tenant">纳入集团合并</span><span class="fz13 text-muted" style="align-self:center">合并主体：明远控股集团</span></div>
                 <select class="select"><option>合并层级：二级子公司 → 区域 → 集团</option><option>单体（不合并）</option></select>
-                <div class="hint" style="margin-top:6px">合并口径校验：内部往来抵消勾稽、内部交易/未实现利润抵消、合并币种折算一致（套用「集团合并抵消集」）</div>
+                <div class="hint" style="margin-top:6px">合并口径校验范围：内部往来抵消勾稽、内部交易/未实现利润抵消、合并币种折算一致（抵消规则集<b>尚未沉淀</b>，可用平台建模脚手架逐条建立）</div>
               </div></div>
-              <div class="form-row"><label>抵消规则集</label><div class="field"><div class="inline"><span class="tag blue">集团合并抵消集 · 18 条 ✕</span><a class="btn sm" href="rule-templates.html">从模板库选择</a></div></div></div>
+              <div class="form-row"><label>抵消规则集</label><div class="field">
+                <div class="inline"><span class="tag warning" style="background:#fdf3e2">内部往来 / 未实现利润抵消 · 待沉淀</span><a class="btn sm" href="rule-templates.html"><svg width="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>用建模脚手架建立</a></div>
+                <div class="hint" style="margin-top:6px">目前暂无现成口径。平台提供合并抵消建模脚手架（内部往来勾稽、内部交易/未实现利润抵消、少数股东权益等），逐条沉淀后保存为「集团合并抵消集」模板即可套用。</div>
+              </div></div>
             </div>
           </div>
         </div>
