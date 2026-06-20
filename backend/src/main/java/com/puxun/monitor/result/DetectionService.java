@@ -25,6 +25,8 @@ import com.puxun.monitor.result.mapper.CheckViolationSampleMapper;
 import com.puxun.monitor.result.mapper.DetectRunMapper;
 import com.puxun.monitor.tenant.domain.Customer;
 import com.puxun.monitor.tenant.mapper.CustomerMapper;
+import com.puxun.monitor.baseline.BaselineService;
+import com.puxun.monitor.alert.AlertService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,8 @@ public class DetectionService {
     private final DetectRunMapper runMapper;
     private final CheckResultMapper resultMapper;
     private final CheckViolationSampleMapper sampleMapper;
+    private final BaselineService baselineService;
+    private final AlertService alertService;
     private final ObjectMapper om;
 
     @Transactional
@@ -75,6 +79,19 @@ public class DetectionService {
         Instant end = Instant.now();
 
         DetectRun run = persist(c, taskId, label, trigger, gate, outcome, start, end);
+
+        // 迭代回归：与已审定基线对比，回归并入运行与门禁（无基线则跳过）
+        try {
+            baselineService.autoRegress(run);
+        } catch (Exception e) {
+            log.warn("回归对比失败 run={}: {}", run.getId(), e.getMessage());
+        }
+        // 失败/回归聚合为告警并按策略推送企业微信
+        try {
+            alertService.raise(run);
+        } catch (Exception e) {
+            log.warn("告警触发失败 run={}: {}", run.getId(), e.getMessage());
+        }
         return run;
     }
 
