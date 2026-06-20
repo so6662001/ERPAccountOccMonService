@@ -46,6 +46,10 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import {
+  DataBoard, OfficeBuilding, Finished, Files, Coin, Timer,
+  Document, TrendCharts, Promotion, Bell, ChatDotRound,
+} from '@element-plus/icons-vue'
 import { useAuthStore } from '@/stores/auth'
 
 const route = useRoute()

@@ -22,7 +22,6 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { ElMessage } from 'element-plus'
 import { rolloutApi } from '@/api'
 
 const rows = ref<any[]>([]); const loading = ref(false)

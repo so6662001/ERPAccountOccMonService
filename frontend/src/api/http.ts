@@ -1,5 +1,4 @@
 import axios, { type AxiosInstance } from 'axios'
-import { ElMessage } from 'element-plus'
 import type { ApiResult } from '@/types'
 
 const http: AxiosInstance = axios.create({

@@ -31,7 +31,6 @@
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { User, Lock } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
 import { useAuthStore } from '@/stores/auth'
 
 const username = ref('admin')

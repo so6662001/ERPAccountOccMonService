@@ -35,7 +35,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { ElMessage } from 'element-plus'
 import { templateSyncApi } from '@/api'
 
 const route = useRoute()

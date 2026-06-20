@@ -46,7 +46,6 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { ElMessage } from 'element-plus'
 import { ruleApi } from '@/api'
 import { SEVERITY_TYPE } from '@/types'
 

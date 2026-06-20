@@ -40,7 +40,6 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { ElMessage } from 'element-plus'
 import { alertApi } from '@/api'
 
 const channels = ref<any[]>([]); const loading = ref(false)

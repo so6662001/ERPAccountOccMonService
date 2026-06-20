@@ -35,4 +35,16 @@ src/
 - 各路由页面经动态 `import()` 自动按需分包（每页 2–5 KB）
 
 效果：原单一 ~1.2 MB 主包拆分为 vendor 大包独立缓存 + 极小的页面分片，首屏与后续导航按需加载。
-（如需进一步压缩 Element Plus 体积，可接入 `unplugin-vue-components` 按需引入。）
+
+### Element Plus 按需引入
+已接入 `unplugin-auto-import` + `unplugin-vue-components`（`ElementPlusResolver`，`importStyle: 'css'`）：
+- 组件与 `ElMessage` 等 API 按使用自动引入（无需全量 `app.use(ElementPlus)` 与全量 CSS）
+- CSS 由 359 KB 整包降为约 197 KB（仅用到的组件样式，gzip ~26 KB）
+
+## 单元 / 组件测试（Vitest）
+```bash
+npm run test       # 运行
+npm run coverage   # 覆盖率
+```
+- `src/utils/display.spec.ts`：映射与格式化纯函数
+- `src/components/SeverityTag.spec.ts`：组件挂载与渲染（@vue/test-utils + jsdom）

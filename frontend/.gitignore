@@ -1,5 +1,10 @@
 node_modules/
 dist/
+coverage/
 *.local
 .DS_Store
 *.log
+
+# unplugin 自动生成的声明文件
+auto-imports.d.ts
+components.d.ts

@@ -52,7 +52,6 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { ElMessage } from 'element-plus'
 import { taskApi } from '@/api'
 
 const rows = ref<any[]>([]); const total = ref(0); const loading = ref(false)
