@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>规则模板库 · ERP账务正确性监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">账</div><div><div class="name">账务监测平台</div><div class="sub">ERP Account Correctness</div></div></div>
+    <nav class="nav">
+      <div class="group">监测中心</div>
+      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>监控总览</a>
+      <a href="tenants.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>客户与租户<span class="count">36</span></a>
+      <a href="rules.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>检查规则<span class="count">128</span></a>
+      <a class="active" href="rule-templates.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>规则模板库</a>
+      <a href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 17l2-2 2 2 3-4"/></svg>检测结果</a>
+      <div class="group">告警与通知</div>
+      <a href="alerts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>告警中心<span class="count danger">7</span></a>
+      <a href="wecom.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>企业微信通知</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb">监测中心 / <b>规则模板库</b></div>
+      <div class="spacer"></div>
+      <div class="env-select">生产环境 · 华东集群 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="avatar">研</div>
+    </header>
+
+    <div class="content">
+      <div class="page-head">
+        <div><h1>规则模板库</h1><p>按行业沉淀的标准规则集，支持一键套用到客户 / 租户群；模板自带版本，随产品 N 次迭代持续演进</p></div>
+        <div class="spacer"></div>
+        <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>导入模板</button>
+        <button class="btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>新建模板集</button>
+      </div>
+
+      <!-- 行业模板集卡片 -->
+      <div class="grid k3" style="margin-bottom:16px">
+        <div class="card card-bd" style="border:2px solid var(--primary)">
+          <div class="flex between"><b>商贸标准集</b><span class="tag blue">已选</span></div>
+          <div class="hint" style="margin:6px 0 12px">应收应付勾稽、往来对账、税额校验等</div>
+          <div class="flex between fz13"><span class="text-muted">规则数</span><b>58 条</b></div>
+          <div class="flex between fz13"><span class="text-muted">适用产品</span><span class="mono">商贸 ERP</span></div>
+          <div class="flex between fz13"><span class="text-muted">模板版本</span><span class="mono">v3 · 6/15 更新</span></div>
+          <div class="flex between fz13"><span class="text-muted">已套用</span><b>12 客户</b></div>
+        </div>
+        <div class="card card-bd">
+          <div class="flex between"><b>制造业全量集</b><span class="tag outline">行业</span></div>
+          <div class="hint" style="margin:6px 0 12px">成本结转、存货核算、工单料工费等</div>
+          <div class="flex between fz13"><span class="text-muted">规则数</span><b>64 条</b></div>
+          <div class="flex between fz13"><span class="text-muted">适用产品</span><span class="mono">制造 ERP 旗舰版</span></div>
+          <div class="flex between fz13"><span class="text-muted">模板版本</span><span class="mono">v5</span></div>
+          <div class="flex between fz13"><span class="text-muted">已套用</span><b>8 客户</b></div>
+        </div>
+        <div class="card card-bd">
+          <div class="flex between"><b>零售连锁集</b><span class="tag outline">行业</span></div>
+          <div class="hint" style="margin:6px 0 12px">门店日结、库存盘点、收银对账等</div>
+          <div class="flex between fz13"><span class="text-muted">规则数</span><b>60 条</b></div>
+          <div class="flex between fz13"><span class="text-muted">适用产品</span><span class="mono">零售连锁版</span></div>
+          <div class="flex between fz13"><span class="text-muted">模板版本</span><span class="mono">v4</span></div>
+          <div class="flex between fz13"><span class="text-muted">已套用</span><b>142 租户</b></div>
+        </div>
+        <div class="card card-bd">
+          <div class="flex between"><b>SaaS 标准集</b><span class="tag outline">行业</span></div>
+          <div class="hint" style="margin:6px 0 12px">多租户隔离校验、跨系统一致、订阅计费等</div>
+          <div class="flex between fz13"><span class="text-muted">规则数</span><b>60 条</b></div>
+          <div class="flex between fz13"><span class="text-muted">适用产品</span><span class="mono">SaaS 标准版</span></div>
+          <div class="flex between fz13"><span class="text-muted">模板版本</span><span class="mono">v2</span></div>
+          <div class="flex between fz13"><span class="text-muted">已套用</span><b>268 租户</b></div>
+        </div>
+        <div class="card card-bd">
+          <div class="flex between"><b>物流核算集</b><span class="tag outline">行业</span></div>
+          <div class="hint" style="margin:6px 0 12px">运费分摊、代收代付、结算单勾稽等</div>
+          <div class="flex between fz13"><span class="text-muted">规则数</span><b>49 条</b></div>
+          <div class="flex between fz13"><span class="text-muted">适用产品</span><span class="mono">物流 TMS</span></div>
+          <div class="flex between fz13"><span class="text-muted">模板版本</span><span class="mono">v3</span></div>
+          <div class="flex between fz13"><span class="text-muted">已套用</span><b>1 客户</b></div>
+        </div>
+        <div class="card card-bd">
+          <div class="flex between"><b>通用完整性集</b><span class="tag info">通用</span></div>
+          <div class="hint" style="margin:6px 0 12px">借贷平衡、余额连续、空值/孤儿、迭代回归</div>
+          <div class="flex between fz13"><span class="text-muted">规则数</span><b>30 条</b></div>
+          <div class="flex between fz13"><span class="text-muted">适用产品</span><span class="mono">全部产品</span></div>
+          <div class="flex between fz13"><span class="text-muted">模板版本</span><span class="mono">v6</span></div>
+          <div class="flex between fz13"><span class="text-muted">已套用</span><b>全部</b></div>
+        </div>
+      </div>
+
+      <!-- 选中模板集明细 + 一键套用 -->
+      <div class="card">
+        <div class="card-hd">
+          <h3>商贸标准集 · 规则明细</h3><span class="tag outline mono">模板 v3</span>
+          <div class="spacer"></div>
+          <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>编辑模板</button>
+          <button class="btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>一键套用到客户 / 租户群</button>
+        </div>
+        <div class="card-bd flush">
+          <table class="table">
+            <thead><tr><th>规则</th><th>类别</th><th>级别</th><th>检查类型</th><th>生效版本</th><th>含于套用</th></tr></thead>
+            <tbody>
+              <tr><td><div class="cell-main">应收明细 = 应收总账余额</div><div class="cell-sub mono">reconciliation.ar_control</div></td><td><span class="tag danger">勾稽</span></td><td><span class="tag critical">CRITICAL</span></td><td><span class="tag outline">scalar_equality</span></td><td class="mono">≥ v3.0</td><td><span class="switch"></span></td></tr>
+              <tr><td><div class="cell-main">应付明细 = 应付总账余额</div><div class="cell-sub mono">reconciliation.ap_control</div></td><td><span class="tag danger">勾稽</span></td><td><span class="tag critical">CRITICAL</span></td><td><span class="tag outline">scalar_equality</span></td><td class="mono">≥ v3.0</td><td><span class="switch"></span></td></tr>
+              <tr><td><div class="cell-main">客户往来余额方向校验</div><div class="cell-sub mono">reconciliation.ar_sign</div></td><td><span class="tag danger">勾稽</span></td><td><span class="tag warning">HIGH</span></td><td><span class="tag outline">rows_empty</span></td><td class="mono">≥ v3.0</td><td><span class="switch"></span></td></tr>
+              <tr><td><div class="cell-main">销项税额 = 价税分离校验</div><div class="cell-sub mono">tax.output_vat</div></td><td><span class="tag warning">成本</span></td><td><span class="tag warning">HIGH</span></td><td><span class="tag outline">rows_empty</span></td><td class="mono text-danger">≥ v3.5</td><td><span class="switch"></span></td></tr>
+              <tr><td><div class="cell-main">折扣后金额一致性（新促销引擎）</div><div class="cell-sub mono">order.discount_consistency</div></td><td><span class="tag info">跨系统</span></td><td><span class="tag warning">HIGH</span></td><td><span class="tag outline">cross_system_scalar_equality</span></td><td class="mono text-danger">≥ v4.0</td><td><span class="switch off"></span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-bd note" style="margin:0 18px 18px">
+          <b>一键套用逻辑：</b>选择目标客户 / 租户群后，平台按每条规则的「生效版本」与目标的「当前部署版本」自动取交集——<b>仅下发版本达标的规则</b>。例如目标为 v3.8 的商贸客户，将套用 ≤ v3.8 的全部规则，<span class="mono">≥ v4.0</span> 的规则保留但暂不执行，待客户升级到 v4.0 后自动启用。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

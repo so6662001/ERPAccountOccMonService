@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>客户接入配置 · ERP账务正确性监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">账</div><div><div class="name">账务监测平台</div><div class="sub">ERP Account Correctness</div></div></div>
+    <nav class="nav">
+      <div class="group">监测中心</div>
+      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>监控总览</a>
+      <a class="active" href="tenants.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>客户与租户<span class="count">36</span></a>
+      <a href="rules.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>检查规则<span class="count">128</span></a>
+      <a href="rule-templates.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>规则模板库</a>
+      <a href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 17l2-2 2 2 3-4"/></svg>检测结果</a>
+      <div class="group">告警与通知</div>
+      <a href="alerts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg>告警中心<span class="count danger">7</span></a>
+      <a href="wecom.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>企业微信通知</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb"><a href="tenants.html">客户与租户</a> / <b>客户接入配置</b></div>
+      <div class="spacer"></div>
+      <button class="btn ghost">取消</button>
+      <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>测试连接</button>
+      <button class="btn primary">保存并启用</button>
+    </header>
+
+    <div class="content">
+      <div class="page-head"><div><h1>明远商贸 · 客户接入配置</h1><p><span class="mono">cust_0188</span> · 接入于 2025-11-02 · 配置变更将记入审计日志</p></div></div>
+
+      <div class="cols">
+        <div>
+          <!-- 基本信息 -->
+          <div class="card mb12">
+            <div class="card-hd"><h3>基本信息</h3></div>
+            <div class="card-bd" style="padding-top:4px;padding-bottom:4px">
+              <div class="form-row"><label class="req">客户名称</label><div class="field"><input class="input" value="明远商贸有限公司"></div></div>
+              <div class="form-row"><label class="req">客户编码</label><div class="field"><input class="input mono" value="cust_0188"></div></div>
+              <div class="form-row"><label class="req">所属行业</label><div class="field"><div class="inline">
+                <select class="select" style="width:auto"><option>商贸</option><option>制造业</option><option>零售连锁</option><option>物流</option><option>工程</option><option>SaaS</option><option>通用</option></select>
+                <span class="hint" style="align-self:center">行业决定可一键套用的规则模板集</span>
+              </div></div></div>
+              <div class="form-row"><label class="req">隔离模式</label><div class="field"><div class="segmented"><button class="active">独立数据库</button><button>租户隔离</button></div></div></div>
+            </div>
+          </div>
+
+          <!-- 数据源 -->
+          <div class="card mb12">
+            <div class="card-hd"><h3>数据源（只读）</h3><div class="spacer"></div><span class="tag success">连接正常 · 12ms</span></div>
+            <div class="card-bd" style="padding-top:4px;padding-bottom:4px">
+              <div class="form-row"><label class="req">数据库类型</label><div class="field"><select class="select"><option>Oracle 19c</option><option>MySQL 8.0</option><option>PostgreSQL 15</option><option>SQL Server 2019</option><option>达梦 DM8</option></select></div></div>
+              <div class="form-row"><label class="req">连接串</label><div class="field"><input class="input mono" value="oracle+oracledb://ro:${MY_0188_PWD}@10.21.4.8:1521/?service_name=ERP"><div class="hint">口令用 ${ENV} 注入，仅授予只读权限</div></div></div>
+              <div class="form-row"><label>读库 / 备库</label><div class="field"><div class="flex"><span class="switch"></span><span class="fz13 text-muted">优先走只读副本，避免影响生产主库</span></div></div></div>
+            </div>
+          </div>
+
+          <!-- 会计期间 -->
+          <div class="card mb12">
+            <div class="card-hd"><h3>会计期间</h3></div>
+            <div class="card-bd" style="padding-top:4px;padding-bottom:4px">
+              <div class="form-row"><label class="req">期间制度</label><div class="field"><select class="select"><option>自然月（每月1日~月末）</option><option>4-4-5 周期</option><option>项目期间制</option><option>自定义</option></select></div></div>
+              <div class="form-row"><label>当前会计期间</label><div class="field"><div class="inline"><input class="input mono" style="width:160px" value="2026-06"><span class="tag warning" style="align-self:center">进行中</span></div></div></div>
+              <div class="form-row"><label>结账日 / 时点</label><div class="field"><input class="input" value="次月 5 日 02:00 触发结账巡检"></div></div>
+              <div class="form-row"><label>历史期间</label><div class="field"><div class="flex"><span class="switch"></span><span class="fz13 text-muted">已结账期间锁定，仅做回归对比不再变更基线</span></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <!-- SLA -->
+          <div class="card mb12">
+            <div class="card-hd"><h3>SLA 服务等级</h3></div>
+            <div class="card-bd" style="padding-top:4px;padding-bottom:4px">
+              <div class="form-row" style="grid-template-columns:120px 1fr"><label class="req">SLA 等级</label><div class="field"><div class="segmented"><button class="active">🥇 金牌</button><button>🥈 银牌</button><button>🥉 铜牌</button></div></div></div>
+              <div class="form-row" style="grid-template-columns:120px 1fr"><label>可用性目标</label><div class="field"><input class="input" value="99.9%"></div></div>
+              <div class="form-row" style="grid-template-columns:120px 1fr"><label>检测频率</label><div class="field"><select class="select"><option>每 10 分钟</option><option>每 15 分钟</option><option>每 30 分钟</option><option>每小时</option></select></div></div>
+              <div class="form-row" style="grid-template-columns:120px 1fr"><label>告警响应时长</label><div class="field"><input class="input" value="CRITICAL ≤ 15 分钟，超时升级主管"></div></div>
+            </div>
+          </div>
+
+          <!-- 关联产品与版本 -->
+          <div class="card mb12">
+            <div class="card-hd"><h3>关联产品与部署版本</h3><div class="spacer"></div><span class="tag blue">用于规则版本生效判定</span></div>
+            <div class="card-bd" style="padding-top:4px;padding-bottom:4px">
+              <div class="form-row" style="grid-template-columns:120px 1fr"><label class="req">产品线</label><div class="field"><select class="select"><option>商贸 ERP 标准版</option><option>制造 ERP 旗舰版</option><option>零售连锁版</option><option>SaaS 标准版</option></select></div></div>
+              <div class="form-row" style="grid-template-columns:120px 1fr"><label class="req">当前部署版本</label><div class="field"><div class="inline"><input class="input mono" style="width:140px" value="v3.8.2"><span class="tag success" style="align-self:center">最新</span></div><div class="hint">规则将据此判断"版本 ≥ 生效版本"才执行</div></div></div>
+              <div class="form-row" style="grid-template-columns:120px 1fr"><label>所在服务器</label><div class="field"><div class="inline"><span class="tag outline mono">node-east-07</span><span class="tag outline mono">华东集群</span></div></div></div>
+              <div class="form-row" style="grid-template-columns:120px 1fr"><label>升级联动</label><div class="field"><div class="flex"><span class="switch"></span><span class="fz13 text-muted">版本升级后自动重算适用规则并刷新基线</span></div></div></div>
+            </div>
+          </div>
+
+          <!-- 规则集 -->
+          <div class="card">
+            <div class="card-hd"><h3>套用规则集</h3><div class="spacer"></div><a class="btn sm" href="rule-templates.html">从模板库选择</a></div>
+            <div class="card-bd">
+              <div class="note mb12">已根据「商贸」行业推荐 <b>商贸标准集</b>，含 58 条规则。可一键套用，后续按客户微调。</div>
+              <div class="inline">
+                <span class="tag blue" style="padding:6px 12px">商贸标准集 · 58 条 ✕</span>
+                <span class="tag outline" style="padding:6px 12px">通用完整性集 · 16 条 ✕</span>
+                <button class="btn sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>添加规则集</button>
+              </div>
+              <div class="divider"></div>
+              <div class="flex between fz13"><span class="text-muted">实际生效规则（按当前版本 v3.8.2 过滤后）</span><b>71 / 74 条</b></div>
+              <div class="hint" style="margin-top:4px">其中 3 条「生效版本 ≥ v4.0」的规则在当前版本下自动停用，升级后自动启用。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
