@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>检测结果 · ERP账务正确性监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">账</div><div><div class="name">账务监测平台</div><div class="sub">ERP Account Correctness</div></div></div>
+    <nav class="nav">
+      <div class="group">监测中心</div>
+      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>监控总览</a>
+      <a href="tenants.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>客户与租户<span class="count">36</span></a>
+      <a href="rules.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>检查规则<span class="count">128</span></a>
+      <a class="active" href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 17l2-2 2 2 3-4"/></svg>检测结果</a>
+      <div class="group">告警与通知</div>
+      <a href="alerts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>告警中心<span class="count danger">7</span></a>
+      <a href="wecom.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>企业微信通知</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb">监测中心 / 检测结果 / <b>运行详情</b></div>
+      <div class="spacer"></div>
+      <div class="env-select">生产环境 · 华东集群 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="avatar">研</div>
+    </header>
+
+    <div class="content">
+      <div class="page-head">
+        <div><h1>检测运行详情</h1><p><span class="mono">run #f70db0fd · 明远商贸（cust_0188）</span> · 2026-06-20 14:02 · 触发：定时调度 · 耗时 1.4s</p></div>
+        <div class="spacer"></div>
+        <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>导出报告</button>
+        <button class="btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M3.5 9a9 9 0 0 1 14.8-3.4L23 10"/></svg>重新检测</button>
+      </div>
+
+      <!-- 概览 -->
+      <div class="grid k4" style="margin-bottom:16px">
+        <div class="card kpi"><div class="label">检查项</div><div class="value">58</div><div class="delta">规则集：商贸标准集</div></div>
+        <div class="card kpi"><div class="label">通过</div><div class="value text-success">55</div><div class="delta up">通过率 94.8%</div></div>
+        <div class="card kpi"><div class="label">失败</div><div class="value text-danger">3</div><div class="delta down">严重 1 · 高 2</div></div>
+        <div class="card kpi"><div class="label">最高级别</div><div class="value" style="font-size:22px"><span class="tag critical" style="font-size:13px">CRITICAL</span></div><div class="delta down">已阻断结账并推送企业微信</div></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="segmented"><button class="active">全部 58</button><button>失败 3</button><button>通过 55</button></div>
+        <div class="spacer"></div>
+        <span class="text-muted fz13">仅展示失败项明细，通过项已折叠</span>
+      </div>
+
+      <!-- 失败项 1：借贷平衡 -->
+      <div class="card mb12">
+        <div class="card-hd"><span class="tag critical">✗ FAILED</span><h3 style="margin-left:4px">逐张凭证借贷平衡</h3><span class="tag outline">balance.voucher_each</span><div class="spacer"></div><span class="tag critical">CRITICAL</span></div>
+        <div class="card-bd">
+          <div class="note amber mb12">发现 <b>1 条</b>违规：凭证借方合计 ≠ 贷方合计。差额将直接导致试算不平、报表错乱。</div>
+          <table class="table" style="border:1px solid var(--border-2);border-radius:8px;overflow:hidden">
+            <thead><tr><th>凭证号</th><th>借方合计</th><th>贷方合计</th><th>差额</th><th>制单</th><th>来源单据</th></tr></thead>
+            <tbody><tr><td class="mono">V20260620-088</td><td>¥38,800.00</td><td>¥40,000.00</td><td class="text-danger strong">−¥1,200.00</td><td>系统接口</td><td class="mono">SO-20260620-3391</td></tr></tbody>
+          </table>
+          <div class="hint" style="margin-top:8px">疑似与 v3.8 销售出库过账逻辑变更相关，建议结合「迭代回归」结果排查。</div>
+        </div>
+      </div>
+
+      <!-- 失败项 2：应付勾稽 -->
+      <div class="card mb12">
+        <div class="card-hd"><span class="tag danger">✗ FAILED</span><h3 style="margin-left:4px">应付明细合计 = 应付总账余额（2202）</h3><span class="tag outline">reconciliation.ap_control</span><div class="spacer"></div><span class="tag warning">HIGH</span></div>
+        <div class="card-bd">
+          <div class="grid k3">
+            <div class="card card-bd" style="text-align:center"><div class="text-muted fz12">应付明细合计</div><div style="font-size:22px;font-weight:800">¥286,400</div></div>
+            <div class="card card-bd" style="text-align:center"><div class="text-muted fz12">应付总账余额</div><div style="font-size:22px;font-weight:800">¥287,250</div></div>
+            <div class="card card-bd" style="text-align:center;border-color:#f6c9c5"><div class="text-muted fz12">差额</div><div style="font-size:22px;font-weight:800" class="text-danger">−¥850</div></div>
+          </div>
+          <div class="hint" style="margin-top:10px">差额可能导致对供应商欠款口径不一致，存在多付/漏付风险。</div>
+        </div>
+      </div>
+
+      <!-- 失败项 3：成本 -->
+      <div class="card mb12">
+        <div class="card-hd"><span class="tag danger">✗ FAILED</span><h3 style="margin-left:4px">存货金额 = 数量 × 单价</h3><span class="tag outline">cost.inventory_amount</span><div class="spacer"></div><span class="tag warning">HIGH</span></div>
+        <div class="card-bd">
+          <table class="table" style="border:1px solid var(--border-2);border-radius:8px;overflow:hidden">
+            <thead><tr><th>存货单 ID</th><th>物料</th><th>数量</th><th>单价</th><th>记账金额</th><th>应为</th><th>差额</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">INV-90231</td><td>钢材 Q235</td><td>200</td><td>¥8.00</td><td>¥1,599.00</td><td>¥1,600.00</td><td class="text-danger strong">−¥1.00</td></tr>
+              <tr><td class="mono">INV-90244</td><td>铜线 T2</td><td>50</td><td>¥30.00</td><td>¥1,498.50</td><td>¥1,500.00</td><td class="text-danger strong">−¥1.50</td></tr>
+            </tbody>
+          </table>
+          <div class="hint" style="margin-top:8px">成本金额偏差将直接传导到利润核算与利润分配。</div>
+        </div>
+      </div>
+
+      <!-- 通过项折叠示例 -->
+      <div class="card">
+        <div class="card-hd"><h3>已通过检查（55）</h3><div class="spacer"></div><button class="btn sm ghost">展开全部</button></div>
+        <div class="card-bd flush">
+          <table class="table">
+            <tbody>
+              <tr><td style="width:40px"><span class="tag success" style="padding:2px 6px">✓</span></td><td class="cell-main">全局借贷平衡</td><td class="mono muted">balance.global_debit_credit</td><td class="muted">Σ借−Σ贷 = ¥0.00</td><td><span class="tag critical">CRITICAL</span></td></tr>
+              <tr><td><span class="tag success" style="padding:2px 6px">✓</span></td><td class="cell-main">应收明细 = 应收总账</td><td class="mono muted">reconciliation.ar_control</td><td class="muted">¥512,300 ≈ ¥512,300</td><td><span class="tag critical">CRITICAL</span></td></tr>
+              <tr><td><span class="tag success" style="padding:2px 6px">✓</span></td><td class="cell-main">科目余额连续性</td><td class="mono muted">continuity.account_balance</td><td class="muted">无违规记录</td><td><span class="tag warning">HIGH</span></td></tr>
+              <tr><td><span class="tag success" style="padding:2px 6px">✓</span></td><td class="cell-main">凭证分录金额非空</td><td class="mono muted">integrity.null_amount</td><td class="muted">无违规记录</td><td><span class="tag info">MEDIUM</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

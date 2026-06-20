@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>检查规则 · ERP账务正确性监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">账</div><div><div class="name">账务监测平台</div><div class="sub">ERP Account Correctness</div></div></div>
+    <nav class="nav">
+      <div class="group">监测中心</div>
+      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>监控总览</a>
+      <a href="tenants.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>客户与租户<span class="count">36</span></a>
+      <a class="active" href="rules.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>检查规则<span class="count">128</span></a>
+      <a href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 17l2-2 2 2 3-4"/></svg>检测结果</a>
+      <div class="group">告警与通知</div>
+      <a href="alerts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>告警中心<span class="count danger">7</span></a>
+      <a href="wecom.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>企业微信通知</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb">监测中心 / <b>检查规则</b></div>
+      <div class="spacer"></div>
+      <div class="env-select">生产环境 · 华东集群 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="avatar">研</div>
+    </header>
+
+    <div class="content">
+      <div class="page-head">
+        <div><h1>检查规则</h1><p>声明式账务约束，支持新增 / 修改 / 启停 / 版本回溯 —— 随软件迭代持续演进规则库</p></div>
+        <div class="spacer"></div>
+        <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>导入 / 导出 YAML</button>
+        <a class="btn primary" href="rule-edit.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>新建规则</a>
+      </div>
+
+      <!-- 分类标签 -->
+      <div class="tabs">
+        <a class="active">全部 128</a><a>平衡 18</a><a>勾稽 31</a><a>连续性 22</a><a>成本 19</a><a>完整性 16</a><a>跨系统 12</a><a>迭代回归 10</a>
+      </div>
+
+      <div class="toolbar">
+        <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="按名称 / key / SQL 搜索规则…"></div>
+        <select class="select" style="width:auto"><option>全部规则集</option><option>制造业全量集</option><option>商贸标准集</option><option>零售连锁集</option></select>
+        <select class="select" style="width:auto"><option>全部级别</option><option>CRITICAL</option><option>HIGH</option><option>MEDIUM</option></select>
+        <div class="spacer"></div>
+        <span class="text-muted fz13">启用 121 · 停用 7</span>
+      </div>
+
+      <div class="card">
+        <div class="card-bd flush">
+          <table class="table">
+            <thead><tr><th>规则</th><th>类别</th><th>类型</th><th>级别</th><th>适用范围</th><th>版本</th><th>状态</th><th style="width:120px">操作</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><div class="cell-main">全局借贷平衡（Σ借 − Σ贷 = 0）</div><div class="cell-sub mono">balance.global_debit_credit</div></td>
+                <td><span class="tag danger">平衡</span></td><td><span class="tag outline">scalar_zero</span></td><td><span class="tag critical">CRITICAL</span></td>
+                <td>全部客户 / 租户</td><td class="mono muted">v6</td>
+                <td><span class="switch"></span></td>
+                <td><a class="btn link" href="rule-edit.html">编辑</a><button class="btn link">历史</button></td>
+              </tr>
+              <tr>
+                <td><div class="cell-main">应收明细合计 = 应收总账余额</div><div class="cell-sub mono">reconciliation.ar_control</div></td>
+                <td><span class="tag danger">勾稽</span></td><td><span class="tag outline">scalar_equality</span></td><td><span class="tag critical">CRITICAL</span></td>
+                <td>商贸标准集 · 12 客户</td><td class="mono muted">v3</td>
+                <td><span class="switch"></span></td>
+                <td><a class="btn link" href="rule-edit.html">编辑</a><button class="btn link">历史</button></td>
+              </tr>
+              <tr>
+                <td><div class="cell-main">应付明细合计 = 应付总账余额</div><div class="cell-sub mono">reconciliation.ap_control</div></td>
+                <td><span class="tag danger">勾稽</span></td><td><span class="tag outline">scalar_equality</span></td><td><span class="tag critical">CRITICAL</span></td>
+                <td>全部客户 / 租户</td><td class="mono muted">v3</td>
+                <td><span class="switch"></span></td>
+                <td><a class="btn link" href="rule-edit.html">编辑</a><button class="btn link">历史</button></td>
+              </tr>
+              <tr>
+                <td><div class="cell-main">科目余额连续性（期初+借−贷=期末）</div><div class="cell-sub mono">continuity.account_balance</div></td>
+                <td><span class="tag warning">连续性</span></td><td><span class="tag outline">rows_empty</span></td><td><span class="tag warning">HIGH</span></td>
+                <td>全部客户 / 租户</td><td class="mono muted">v2</td>
+                <td><span class="switch"></span></td>
+                <td><a class="btn link" href="rule-edit.html">编辑</a><button class="btn link">历史</button></td>
+              </tr>
+              <tr>
+                <td><div class="cell-main">存货金额 = 数量 × 单价</div><div class="cell-sub mono">cost.inventory_amount</div></td>
+                <td><span class="tag warning">成本</span></td><td><span class="tag outline">rows_empty</span></td><td><span class="tag warning">HIGH</span></td>
+                <td>制造业全量集 · 8 客户</td><td class="mono muted">v4</td>
+                <td><span class="switch"></span></td>
+                <td><a class="btn link" href="rule-edit.html">编辑</a><button class="btn link">历史</button></td>
+              </tr>
+              <tr>
+                <td><div class="cell-main">订单系统应收 = 财务系统应收</div><div class="cell-sub mono">cross_system.ar_consistency</div></td>
+                <td><span class="tag info">跨系统</span></td><td><span class="tag outline">cross_system_scalar_equality</span></td><td><span class="tag critical">CRITICAL</span></td>
+                <td>云联SaaS 租户群</td><td class="mono muted">v1</td>
+                <td><span class="switch"></span></td>
+                <td><a class="btn link" href="rule-edit.html">编辑</a><button class="btn link">历史</button></td>
+              </tr>
+              <tr>
+                <td><div class="cell-main">主营业务收入合计（不变量·迭代回归）</div><div class="cell-sub mono">invariant.revenue_monthly</div></td>
+                <td><span class="tag blue">迭代回归</span></td><td><span class="tag outline">scalar_range + baseline</span></td><td><span class="tag warning">HIGH</span></td>
+                <td>全部客户 / 租户</td><td class="mono muted">v2</td>
+                <td><span class="switch"></span></td>
+                <td><a class="btn link" href="rule-edit.html">编辑</a><button class="btn link">历史</button></td>
+              </tr>
+              <tr>
+                <td><div class="cell-main">凭证分录金额非空</div><div class="cell-sub mono">integrity.null_amount</div></td>
+                <td><span class="tag info">完整性</span></td><td><span class="tag outline">rows_empty</span></td><td><span class="tag info">MEDIUM</span></td>
+                <td>全部客户 / 租户</td><td class="mono muted">v1</td>
+                <td><span class="switch off"></span></td>
+                <td><a class="btn link" href="rule-edit.html">编辑</a><button class="btn link">历史</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="flex between" style="margin-top:14px;color:var(--muted);font-size:13px">
+        <span>共 128 条规则</span>
+        <div class="flex" style="gap:6px"><button class="btn sm">上一页</button><button class="btn sm primary">1</button><button class="btn sm">2</button><button class="btn sm">3</button><button class="btn sm">下一页</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
