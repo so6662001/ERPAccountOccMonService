@@ -43,9 +43,40 @@ public class CheckEngine {
                 outcome.add(CheckResultData.skipped(rule, "跳过：" + skip));
                 continue;
             }
-            outcome.add(safeExecute(rule, ctx));
+            // 租户隔离模式下 rows_empty 走"单 SQL 聚合扫描 + 异常租户下钻"
+            if (scope.mode() == Enums.IsolationMode.TENANT_SHARED
+                    && rule.type() == Enums.RuleType.rows_empty) {
+                outcome.add(tenantAggregateScan(rule, ctx));
+            } else {
+                outcome.add(safeExecute(rule, ctx));
+            }
         }
         return outcome.computeSummary();
+    }
+
+    /**
+     * 租户隔离高效扫描：一条聚合 SQL 跨全租户定位异常租户，避免逐租户 N 次查询。
+     * 约定：rows_empty 的违规查询需 SELECT 出租户列（默认 tenant_id）。
+     */
+    private CheckResultData tenantAggregateScan(RuleSpec rule, CheckContext ctx) {
+        long t0 = System.currentTimeMillis();
+        String tenantCol = ctx.scope().tenantColumn() != null ? ctx.scope().tenantColumn() : "tenant_id";
+        String agg = "SELECT __s." + tenantCol + " AS tenant_key, COUNT(*) AS violations "
+                + "FROM (" + rule.sql() + ") __s GROUP BY __s." + tenantCol;
+        try {
+            List<Map<String, Object>> offending = ctx.facade().rows(
+                    rule.datasourceId(), agg, ctx.baseParams(), ctx.sampleLimit());
+            long ms = System.currentTimeMillis() - t0;
+            if (offending.isEmpty()) {
+                return CheckResultData.passed(rule, "全部租户无违规", Map.of("offendingTenants", 0), ms);
+            }
+            return CheckResultData.failed(rule,
+                    "发现 " + offending.size() + " 个异常租户（一次聚合扫描定位，可下钻明细）",
+                    Map.of("offendingTenants", offending.size()), offending, ms);
+        } catch (Exception e) {
+            log.warn("租户聚合扫描异常 ruleKey={}: {}", rule.ruleKey(), e.getMessage());
+            return CheckResultData.error(rule, e.getMessage(), System.currentTimeMillis() - t0);
+        }
     }
 
     private CheckResultData safeExecute(RuleSpec rule, CheckContext ctx) {

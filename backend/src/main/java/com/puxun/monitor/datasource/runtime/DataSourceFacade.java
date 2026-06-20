@@ -1,5 +1,6 @@
 package com.puxun.monitor.datasource.runtime;
 
+import com.puxun.monitor.datasource.security.SampleMasker;
 import com.puxun.monitor.datasource.security.SqlReadOnlyValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -52,6 +53,6 @@ public class DataSourceFacade {
         SqlReadOnlyValidator.assertSelectOnly(sql);
         var tpl = jdbc(dataSourceId);
         tpl.getJdbcTemplate().setMaxRows(Math.max(1, limit));
-        return tpl.queryForList(sql, params);
+        return SampleMasker.mask(tpl.queryForList(sql, params));
     }
 }

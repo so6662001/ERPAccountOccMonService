@@ -1,8 +1,11 @@
 package com.puxun.monitor.schedule;
 
 import com.puxun.monitor.common.enums.Enums;
+import com.puxun.monitor.common.lock.DistributedLock;
 import com.puxun.monitor.schedule.domain.DetectTask;
 import lombok.RequiredArgsConstructor;
+
+import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -22,6 +25,7 @@ import java.util.concurrent.ScheduledFuture;
 public class DynamicCronScheduler {
 
     private final TaskService taskService;
+    private final DistributedLock distributedLock;
 
     private final ThreadPoolTaskScheduler scheduler = init();
     private final ConcurrentHashMap<Long, ScheduledFuture<?>> futures = new ConcurrentHashMap<>();
@@ -58,10 +62,17 @@ public class DynamicCronScheduler {
     }
 
     private void safeRun(Long taskId) {
+        String lockKey = "detect:task:" + taskId;
+        if (!distributedLock.tryLock(lockKey, Duration.ofMinutes(30))) {
+            log.info("任务 {} 正在其他实例执行，跳过本次触发", taskId);
+            return;
+        }
         try {
             taskService.runNow(taskId, Enums.TriggerType.CRON);
         } catch (Exception e) {
             log.warn("定时执行任务 {} 失败: {}", taskId, e.getMessage());
+        } finally {
+            distributedLock.unlock(lockKey);
         }
     }
 }
