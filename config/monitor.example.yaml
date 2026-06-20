@@ -1,0 +1,137 @@
+# ERP 账务正确性监测 —— 示例配置
+#
+# 数据库口令等敏感信息建议用 ${ENV_VAR} 从环境变量注入，不要写进文件。
+# 例如生产 MySQL：  url: "mysql+pymysql://readonly:${DB_PWD}@10.0.0.1:3306/erp"
+#       Oracle：    url: "oracle+oracledb://ro:${DB_PWD}@host:1521/?service_name=erp"
+#       PostgreSQL：url: "postgresql+psycopg://ro:${DB_PWD}@host:5432/erp"
+#
+# 本示例默认指向 `monitor init-demo` 生成的两套 SQLite 演示库。
+
+settings:
+  default_tolerance: 0.005   # 默认金额容差（元），吸收浮点误差
+  sample_limit: 20           # 违规明细抽样上限
+  gate_severity: HIGH        # CI 门禁级别：出现 >= 该级别的问题即判定失败
+  baseline_path: baseline.json
+  alert:
+    webhook_url: ""          # 钉钉/企业微信/飞书自定义机器人地址，留空则仅控制台告警
+
+datasources:
+  finance:
+    url: "sqlite:///demo_finance.sqlite"
+  orders:
+    url: "sqlite:///demo_orders.sqlite"
+
+checks:
+  # ===== 平衡类：借贷必相等 =====
+  - key: balance.global_debit_credit
+    type: scalar_zero
+    name: 全局借贷平衡（Σ借 − Σ贷 = 0）
+    category: balance
+    severity: CRITICAL
+    datasource: finance
+    sql: >
+      SELECT COALESCE(SUM(debit),0) - COALESCE(SUM(credit),0)
+      FROM gl_voucher_entry WHERE period = '2026-05'
+
+  - key: balance.voucher_each
+    type: rows_empty
+    name: 逐张凭证借贷平衡
+    category: balance
+    severity: CRITICAL
+    datasource: finance
+    sql: >
+      SELECT voucher_no,
+             SUM(debit)  AS sum_debit,
+             SUM(credit) AS sum_credit,
+             SUM(debit) - SUM(credit) AS diff
+      FROM gl_voucher_entry WHERE period = '2026-05'
+      GROUP BY voucher_no
+      HAVING ABS(SUM(debit) - SUM(credit)) > 0.005
+
+  # ===== 勾稽类：总账=明细 =====
+  - key: reconciliation.ar_control
+    type: scalar_equality
+    name: 应收明细合计 = 应收总账科目余额（1122）
+    category: reconciliation
+    severity: CRITICAL
+    datasource: finance
+    left_sql: "SELECT COALESCE(SUM(amount),0) FROM ar_detail WHERE period='2026-05'"
+    right_sql: "SELECT closing FROM gl_account_balance WHERE account_code='1122' AND period='2026-05'"
+
+  - key: reconciliation.ap_control
+    type: scalar_equality
+    name: 应付明细合计 = 应付总账科目余额（2202）
+    category: reconciliation
+    severity: CRITICAL
+    datasource: finance
+    left_sql: "SELECT COALESCE(SUM(amount),0) FROM ap_detail WHERE period='2026-05'"
+    right_sql: "SELECT closing FROM gl_account_balance WHERE account_code='2202' AND period='2026-05'"
+
+  # ===== 连续性：期初 + 本期借 − 本期贷 = 期末 =====
+  - key: continuity.account_balance
+    type: rows_empty
+    name: 科目余额连续性（期初+借−贷=期末）
+    category: continuity
+    severity: HIGH
+    datasource: finance
+    sql: >
+      SELECT account_code, opening, debit, credit, closing,
+             (opening + debit - credit - closing) AS diff
+      FROM gl_account_balance WHERE period = '2026-05'
+      AND ABS(opening + debit - credit - closing) > 0.005
+
+  # ===== 成本类：金额=数量×单价、单价非负 =====
+  - key: cost.inventory_amount
+    type: rows_empty
+    name: 存货金额 = 数量 × 单价
+    category: cost
+    severity: HIGH
+    datasource: finance
+    sql: >
+      SELECT id, item, qty, unit_cost, amount,
+             (amount - qty * unit_cost) AS diff
+      FROM inventory_txn WHERE period = '2026-05'
+      AND ABS(amount - qty * unit_cost) > 0.005
+
+  - key: cost.unit_cost_nonneg
+    type: scalar_range
+    name: 单位成本不为负
+    category: cost
+    severity: MEDIUM
+    datasource: finance
+    sql: "SELECT COALESCE(MIN(unit_cost),0) FROM inventory_txn WHERE period='2026-05'"
+    min_value: 0
+
+  # ===== 完整性：无空金额 =====
+  - key: integrity.null_amount
+    type: rows_empty
+    name: 凭证分录金额非空
+    category: integrity
+    severity: MEDIUM
+    datasource: finance
+    sql: "SELECT id FROM gl_voucher_entry WHERE debit IS NULL OR credit IS NULL"
+
+  # ===== 跨系统一致：订单系统应收 = 财务系统应收 =====
+  - key: cross_system.ar_consistency
+    type: cross_system_scalar_equality
+    name: 订单系统应收 = 财务系统应收
+    category: cross_system
+    severity: CRITICAL
+    left_datasource: finance
+    left_sql: "SELECT COALESCE(SUM(amount),0) FROM ar_detail WHERE period='2026-05'"
+    right_datasource: orders
+    right_sql: "SELECT COALESCE(SUM(amount),0) FROM order_system_ar WHERE period='2026-05'"
+
+  # ===== 不变量：纳入基线回归对比的关键指标 =====
+  # 该检查本身始终通过；其指标 value 会被快照进基线，
+  # 迭代后若该指标发生变化（本不该变），回归对比会判定失败。
+  - key: invariant.revenue_202605
+    type: scalar_range
+    name: 主营业务收入合计（2026-05，不变量）
+    category: invariant
+    severity: INFO
+    datasource: finance
+    sql: "SELECT COALESCE(SUM(credit),0) FROM gl_voucher_entry WHERE account_code='6001' AND period='2026-05'"
+    invariant: true
+    invariant_metric: value
+    invariant_tolerance: 0.005
