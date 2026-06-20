@@ -1,0 +1,65 @@
+# 全栈运行态联调：MySQL + Redis + 后端 + 前端
+# 用法： docker compose up -d --build
+#   前端: http://localhost:8088   （登录 admin / admin123）
+#   后端 Swagger: http://localhost:8080/api/swagger-ui.html
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: puxun-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: puxun_monitor
+      TZ: UTC
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7
+    container_name: puxun-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: puxun-backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      PLATFORM_DB_HOST: mysql
+      PLATFORM_DB_PORT: "3306"
+      PLATFORM_DB_NAME: puxun_monitor
+      PLATFORM_DB_USER: root
+      PLATFORM_DB_PWD: root
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      ADMIN_INIT_PWD: admin123
+      JWT_SECRET: change-this-to-a-long-random-secret-key-at-least-32-bytes
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    container_name: puxun-frontend
+    depends_on:
+      - backend
+    ports:
+      - "8088:80"
+
+volumes:
+  mysql-data:

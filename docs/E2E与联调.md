@@ -11,7 +11,23 @@
   ```
 - CI：`.github/workflows/ci.yml` 的 `backend` job 在 GitHub runner（自带 Docker）上运行 `mvn test`，**Testcontainers E2E 将真实执行**。
 
-## 2. 本地全栈联调（docker compose）
+## 2a. 一键全栈运行态联调（根目录 docker compose，推荐）
+
+在**带 Docker 的环境**（如在 Cursor 网页端配置了 Docker 的 Cloud Agent 环境）一条命令拉起 MySQL + Redis + 后端 + 前端：
+
+```bash
+docker compose up -d --build
+#   前端:        http://localhost:8088   （登录 admin / admin123）
+#   后端 Swagger: http://localhost:8080/api/swagger-ui.html
+```
+
+- 后端容器启动时自动等待 MySQL 健康 → 执行 Flyway 全量迁移(V1–V7) → 创建管理员 → 启动调度。
+- 前端 Nginx 将 `/api` 反代到后端容器（服务名 `backend:8080`）。
+- 停止：`docker compose down`（保留数据卷）；清库：`docker compose down -v`。
+
+> 镜像：`backend/Dockerfile`（Maven 多阶段 → JRE）、`frontend/Dockerfile`（Node 构建 → Nginx + `nginx.conf` 反代）。
+
+## 2b. 本地分别启动（docker compose 仅起依赖）
 
 ```bash
 # 1) 起平台库 MySQL + Redis
