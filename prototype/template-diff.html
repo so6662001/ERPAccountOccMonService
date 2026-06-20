@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模板差异对比 · ERP账务正确性监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.diff-add{background:var(--success-soft)} .diff-del{background:var(--danger-soft)} .diff-mod{background:var(--warning-soft)}
+.diff-chk{display:flex;gap:12px;align-items:flex-start}
+.chk{width:18px;height:18px;border:2px solid var(--primary);border-radius:5px;background:var(--primary);position:relative;flex-shrink:0;margin-top:2px}
+.chk::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.chk.off{background:#fff;border-color:#cbd3e1}.chk.off::after{display:none}
+.sxs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sxs .pane{border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.sxs .pane h5{margin:0;padding:8px 12px;font-size:12px;background:#fafbfd;border-bottom:1px solid var(--border-2);color:var(--text-2)}
+.sxs pre{margin:0;padding:12px;font-family:"SF Mono",Consolas,monospace;font-size:12px;line-height:1.7;white-space:pre-wrap}
+.dl{color:#b42318}.ad{color:#067647}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">账</div><div><div class="name">账务监测平台</div><div class="sub">ERP Account Correctness</div></div></div>
+    <nav class="nav">
+      <div class="group">监测中心</div>
+      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>监控总览</a>
+      <a href="tenants.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>客户与租户<span class="count">36</span></a>
+      <a href="rules.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>检查规则<span class="count">128</span></a>
+      <a class="active" href="rule-templates.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>规则模板库</a>
+      <a href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 17l2-2 2 2 3-4"/></svg>检测结果</a>
+      <div class="group">运维与发布</div>
+      <a href="datasources.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>数据源</a>
+      <a href="tasks.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>检测任务</a>
+      <a href="baselines.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>基线管理</a>
+      <a href="rollout.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>灰度发布</a>
+      <a href="audit.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>权限与审计</a>
+      <div class="group">告警与通知</div>
+      <a href="alerts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>告警中心<span class="count danger">7</span></a>
+      <a href="wecom.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>企业微信通知</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb"><a href="rule-templates.html">规则模板库</a> / <b>差异对比与同步</b></div>
+      <div class="spacer"></div>
+      <button class="btn ghost">取消</button>
+      <button class="btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7M7 10l5 5 5-5M12 15V3"/></svg>同步已选 3 项</button>
+    </header>
+
+    <div class="content">
+      <div class="page-head"><div><h1>模板差异对比与选择性同步</h1><p>模板 <b>商贸标准集 v2 → v3</b> · 目标：明远商贸（cust_0188，本地基于 v2 + 3 处微调）</p></div></div>
+
+      <div class="grid k4" style="margin-bottom:16px">
+        <div class="card kpi"><div class="label">新增规则</div><div class="value text-success">+2</div></div>
+        <div class="card kpi"><div class="label">修改规则</div><div class="value text-warning">~3</div></div>
+        <div class="card kpi"><div class="label">弃用规则</div><div class="value text-danger">−1</div></div>
+        <div class="card kpi"><div class="label">本地自定义（保留）</div><div class="value">3</div></div>
+      </div>
+
+      <div class="note amber mb12"><b>选择性同步：</b>勾选要接受的模板变更，未勾选的保持客户当前配置；标记为「本地自定义」的规则默认<b>不被覆盖</b>，避免冲掉客户侧微调。同步将生成新版本并可走灰度发布。</div>
+
+      <div class="card">
+        <div class="card-hd"><h3>差异清单</h3><div class="spacer"></div><button class="btn sm">全选模板变更</button><button class="btn sm ghost">仅选高风险</button></div>
+        <div class="card-bd flush">
+          <table class="table">
+            <thead><tr><th style="width:50px">同步</th><th>变更</th><th>规则</th><th>说明</th><th>生效版本</th></tr></thead>
+            <tbody>
+              <tr class="diff-add"><td><div class="chk"></div></td><td><span class="tag success">新增 +</span></td><td><div class="cell-main">销项税额价税分离校验</div><div class="cell-sub mono">tax.output_vat</div></td><td>模板 v3 新增的税额勾稽规则</td><td class="mono">≥ v3.5</td></tr>
+              <tr class="diff-add"><td><div class="chk"></div></td><td><span class="tag success">新增 +</span></td><td><div class="cell-main">预收冲应收一致性</div><div class="cell-sub mono">reconciliation.advance_offset</div></td><td>模板 v3 新增</td><td class="mono">≥ v3.5</td></tr>
+              <tr class="diff-mod"><td><div class="chk"></div></td><td><span class="tag warning">修改 ~</span></td><td><div class="cell-main">应收明细 = 应收总账余额</div><div class="cell-sub mono">reconciliation.ar_control</div></td><td>容差 0.01 → 0.005；级别 HIGH → CRITICAL</td><td class="mono">≥ v3.0</td></tr>
+              <tr class="diff-mod"><td><div class="chk off"></div></td><td><span class="tag warning">修改 ~</span></td><td><div class="cell-main">客户往来余额方向校验</div><div class="cell-sub mono">reconciliation.ar_sign</div></td><td>SQL 调整（含本地微调，谨慎同步）</td><td class="mono">≥ v3.0</td></tr>
+              <tr class="diff-mod"><td><div class="chk off"></div></td><td><span class="tag warning">修改 ~</span></td><td><div class="cell-main">账期逾期金额校验</div><div class="cell-sub mono">ar.overdue_amount</div></td><td>阈值参数调整</td><td class="mono">≥ v3.0</td></tr>
+              <tr class="diff-del"><td><div class="chk off"></div></td><td><span class="tag danger">弃用 −</span></td><td><div class="cell-main">旧版折扣校验（已废弃）</div><div class="cell-sub mono">order.discount_legacy</div></td><td>被新促销引擎规则替代</td><td class="mono">&lt; v4.0</td></tr>
+              <tr><td><div class="chk off"></div></td><td><span class="tag blue">本地自定义</span></td><td><div class="cell-main">明远专属-多账簿往来校验</div><div class="cell-sub mono">custom.mingyuan_ledger</div></td><td>客户侧新增，模板中不存在，保留</td><td class="mono">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 单条修改的并排对比 -->
+      <div class="card" style="margin-top:16px">
+        <div class="card-hd"><h3>修改详情 · reconciliation.ar_control</h3><div class="spacer"></div><span class="tag warning">容差 / 级别变更</span></div>
+        <div class="card-bd">
+          <div class="sxs">
+            <div class="pane"><h5>客户当前（基于模板 v2 + 本地）</h5><pre><span class="k">severity</span>: HIGH
+<span class="k">tolerance</span>: <span class="dl">0.01</span>
+<span class="k">left_sql</span>: "SELECT SUM(amount) FROM ar_detail ..."
+<span class="k">right_sql</span>: "SELECT closing FROM gl_account_balance ..."</pre></div>
+            <div class="pane"><h5>模板 v3（拟同步）</h5><pre><span class="k">severity</span>: <span class="ad">CRITICAL</span>
+<span class="k">tolerance</span>: <span class="ad">0.005</span>
+<span class="k">left_sql</span>: "SELECT SUM(amount) FROM ar_detail ..."
+<span class="k">right_sql</span>: "SELECT closing FROM gl_account_balance ..."</pre></div>
+          </div>
+          <div class="hint" style="margin-top:10px">同步后将提升为 CRITICAL 并收紧容差。建议先在灰度发布中观察，再全量。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

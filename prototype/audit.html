@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>权限与审计 · ERP账务正确性监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">账</div><div><div class="name">账务监测平台</div><div class="sub">ERP Account Correctness</div></div></div>
+    <nav class="nav">
+      <div class="group">监测中心</div>
+      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>监控总览</a>
+      <a href="tenants.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>客户与租户<span class="count">36</span></a>
+      <a href="rules.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>检查规则<span class="count">128</span></a>
+      <a href="rule-templates.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>规则模板库</a>
+      <a href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 17l2-2 2 2 3-4"/></svg>检测结果</a>
+      <div class="group">运维与发布</div>
+      <a href="datasources.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>数据源</a>
+      <a href="tasks.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>检测任务</a>
+      <a href="baselines.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>基线管理</a>
+      <a href="rollout.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>灰度发布</a>
+      <a class="active" href="audit.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>权限与审计</a>
+      <div class="group">告警与通知</div>
+      <a href="alerts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>告警中心<span class="count danger">7</span></a>
+      <a href="wecom.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>企业微信通知</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb">运维与发布 / <b>权限与审计</b></div>
+      <div class="spacer"></div>
+      <div class="env-select">生产环境 · 华东集群 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="avatar">研</div>
+    </header>
+
+    <div class="content">
+      <div class="page-head"><div><h1>权限与审计</h1><p>按角色管控操作权限；规则变更、模板套用、灰度发布、基线重置等关键动作全程留痕</p></div></div>
+
+      <div class="tabs"><a class="active">操作审计日志</a><a>角色与权限</a><a>成员</a></div>
+
+      <div class="cols" style="margin-bottom:16px">
+        <div class="card">
+          <div class="card-hd"><h3>角色权限矩阵</h3></div>
+          <div class="card-bd flush">
+            <table class="table">
+              <thead><tr><th>操作</th><th>平台管理员</th><th>研发</th><th>财务</th><th>只读</th></tr></thead>
+              <tbody>
+                <tr><td>查看监测/告警</td><td><span class="tag success">✓</span></td><td><span class="tag success">✓</span></td><td><span class="tag success">✓</span></td><td><span class="tag success">✓</span></td></tr>
+                <tr><td>编辑规则 / 模板</td><td><span class="tag success">✓</span></td><td><span class="tag success">✓</span></td><td><span class="tag info">—</span></td><td><span class="tag info">—</span></td></tr>
+                <tr><td>灰度发布 / 全量</td><td><span class="tag success">✓</span></td><td><span class="tag warning">需审批</span></td><td><span class="tag info">—</span></td><td><span class="tag info">—</span></td></tr>
+                <tr><td>重置基线（账务审定）</td><td><span class="tag success">✓</span></td><td><span class="tag info">—</span></td><td><span class="tag success">✓</span></td><td><span class="tag info">—</span></td></tr>
+                <tr><td>数据源 / 连接配置</td><td><span class="tag success">✓</span></td><td><span class="tag info">—</span></td><td><span class="tag info">—</span></td><td><span class="tag info">—</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hd"><h3>今日动作统计</h3></div>
+          <div class="card-bd">
+            <div class="grid k2">
+              <div class="card card-bd" style="text-align:center"><div class="text-muted fz12">规则变更</div><div style="font-size:24px;font-weight:800">14</div></div>
+              <div class="card card-bd" style="text-align:center"><div class="text-muted fz12">模板套用</div><div style="font-size:24px;font-weight:800">6</div></div>
+              <div class="card card-bd" style="text-align:center"><div class="text-muted fz12">灰度发布</div><div style="font-size:24px;font-weight:800">3</div></div>
+              <div class="card card-bd" style="text-align:center"><div class="text-muted fz12">基线重置</div><div style="font-size:24px;font-weight:800">2</div></div>
+            </div>
+            <div class="note" style="margin-top:14px">所有变更不可篡改地写入审计库，支持按对象/人/时间追溯，满足账务合规要求。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-hd"><h3>操作审计日志</h3><div class="spacer"></div>
+          <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="搜索操作人 / 对象…"></div>
+        </div>
+        <div class="card-bd flush">
+          <table class="table">
+            <thead><tr><th>时间</th><th>操作人</th><th>角色</th><th>动作</th><th>对象</th><th>变更摘要</th><th>来源 IP</th></tr></thead>
+            <tbody>
+              <tr><td class="mono fz12">14:06:22</td><td>王工</td><td><span class="tag outline">研发</span></td><td><span class="tag warning">灰度发布</span></td><td class="mono fz12">cost.so_cost_carryover</td><td>批次2 推进至华东集群</td><td class="mono fz12">10.8.1.22</td></tr>
+              <tr><td class="mono fz12">13:48:10</td><td>赵会计</td><td><span class="tag outline">财务</span></td><td><span class="tag blue">重置基线</span></td><td class="mono fz12">cust_0188 · 2026-05</td><td>审定收入口径变更，更新基线</td><td class="mono fz12">10.8.3.7</td></tr>
+              <tr><td class="mono fz12">11:30:55</td><td>李工</td><td><span class="tag outline">研发</span></td><td><span class="tag success">套用模板</span></td><td class="mono fz12">商贸标准集 → cust_0211</td><td>一键套用 58 条（版本过滤后 55 条）</td><td class="mono fz12">10.8.1.31</td></tr>
+              <tr><td class="mono fz12">10:12:03</td><td>王工</td><td><span class="tag outline">研发</span></td><td><span class="tag warning">编辑规则</span></td><td class="mono fz12">reconciliation.ar_control</td><td>容差 0.01→0.005，级别 HIGH→CRITICAL</td><td class="mono fz12">10.8.1.22</td></tr>
+              <tr><td class="mono fz12">09:40:18</td><td>admin</td><td><span class="tag outline">管理员</span></td><td><span class="tag info">数据源</span></td><td class="mono fz12">cust_0145 · 达梦</td><td>更新只读副本连接串</td><td class="mono fz12">10.8.0.2</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
