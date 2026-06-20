@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>趋势与统计 · 普讯科技产品应用数据监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.chart{width:100%;height:230px}
+.legend{display:flex;gap:16px;font-size:12.5px;color:var(--text-2);flex-wrap:wrap}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:middle}
+.sbars{display:flex;align-items:flex-end;gap:14px;height:200px;padding-top:10px}
+.sbars .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}
+.sbars .stack{width:60%;border-radius:4px 4px 0 0;display:flex;flex-direction:column-reverse;overflow:hidden}
+.sbars .stack span{display:block}
+.sbars .lbl{font-size:11px;color:var(--muted)}
+.heat{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.heat .cell{height:28px;border-radius:5px;display:grid;place-items:center;font-size:10px;color:#fff;font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">普</div><div><div class="name">普讯数据监测平台</div><div class="sub">Puxun Product Data Monitoring</div></div></div>
+    <nav class="nav">
+      <div class="group">监测中心</div>
+      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>监控总览</a>
+      <a href="tenants.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>客户与租户<span class="count">36</span></a>
+      <a href="rules.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>检查规则<span class="count">128</span></a>
+      <a href="rule-templates.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>规则模板库</a>
+      <a class="active" href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 17l2-2 2 2 3-4"/></svg>检测结果</a>
+      <div class="group">运维与发布</div>
+      <a href="datasources.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>数据源</a>
+      <a href="tasks.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>检测任务</a>
+      <a href="baselines.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>基线管理</a>
+      <a href="rollout.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>灰度发布</a>
+      <a href="audit.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>权限与审计</a>
+      <div class="group">告警与通知</div>
+      <a href="alerts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>告警中心<span class="count danger">7</span></a>
+      <a href="wecom.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>企业微信通知</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb">监测中心 / 检测结果 / <b>趋势与统计</b></div>
+      <div class="spacer"></div>
+      <div class="env-select">近 14 天 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="avatar">研</div>
+    </header>
+
+    <div class="content">
+      <div class="page-head">
+        <div><h1>趋势与统计分析</h1><p>账务正确性的长期健康趋势、失败分布与处置效率，辅助治理与复盘</p></div>
+        <div class="spacer"></div>
+        <a class="btn" href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回检测结果</a>
+        <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>导出报表</button>
+      </div>
+
+      <div class="grid k4" style="margin-bottom:16px">
+        <div class="card kpi"><div class="label">14 天平均通过率</div><div class="value">99.1%</div><div class="delta up">▲ 环比 +0.6%</div></div>
+        <div class="card kpi"><div class="label">回归拦截（发布前）</div><div class="value text-success">17</div><div class="delta up">阻断高风险发布 5 次</div></div>
+        <div class="card kpi"><div class="label">告警平均处置 MTTR</div><div class="value">26<span style="font-size:14px"> min</span></div><div class="delta up">▼ 较上周 -8min</div></div>
+        <div class="card kpi"><div class="label">检测执行总量</div><div class="value">118k</div><div class="delta">日均 8.4k</div></div>
+      </div>
+
+      <div class="cols" style="margin-bottom:16px">
+        <!-- 通过率折线 -->
+        <div class="card">
+          <div class="card-hd"><h3>检测通过率趋势（近 14 天）</h3><div class="spacer"></div><span class="legend"><span><i style="background:var(--primary)"></i>通过率</span></span></div>
+          <div class="card-bd">
+            <svg class="chart" viewBox="0 0 720 230" preserveAspectRatio="none">
+              <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2563eb" stop-opacity="0.22"/><stop offset="1" stop-color="#2563eb" stop-opacity="0"/></linearGradient></defs>
+              <!-- gridlines -->
+              <g stroke="#eef1f6" stroke-width="1">
+                <line x1="40" y1="30" x2="710" y2="30"/><line x1="40" y1="80" x2="710" y2="80"/><line x1="40" y1="130" x2="710" y2="130"/><line x1="40" y1="180" x2="710" y2="180"/>
+              </g>
+              <g fill="#8694ad" font-size="11">
+                <text x="6" y="34">100%</text><text x="10" y="84">99%</text><text x="10" y="134">98%</text><text x="10" y="184">97%</text>
+              </g>
+              <!-- area + line: y: 30=100%,80=99%,130=98%,180=97% -->
+              <path d="M40,70 L92,60 L144,85 L196,55 L248,95 L300,72 L352,50 L404,78 L456,45 L508,120 L560,60 L612,52 L664,68 L710,48 L710,200 L40,200 Z" fill="url(#g1)"/>
+              <polyline points="40,70 92,60 144,85 196,55 248,95 300,72 352,50 404,78 456,45 508,120 560,60 612,52 664,68 710,48" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="508" cy="120" r="4" fill="#d92d20"/>
+              <circle cx="710" cy="48" r="4" fill="#2563eb"/>
+            </svg>
+            <div class="hint" style="text-align:center">红点为 v3.8 发布当日通过率回落（成本/收入回归），修复后回升</div>
+          </div>
+        </div>
+
+        <!-- 失败按类别堆叠 -->
+        <div class="card">
+          <div class="card-hd"><h3>失败数按类别（近 7 天）</h3></div>
+          <div class="card-bd">
+            <div class="sbars">
+              <div class="col"><div class="stack" style="height:60px"><span style="height:18px;background:var(--danger)"></span><span style="height:14px;background:var(--warning)"></span><span style="height:28px;background:var(--primary)"></span></div><div class="lbl">周一</div></div>
+              <div class="col"><div class="stack" style="height:90px"><span style="height:30px;background:var(--danger)"></span><span style="height:24px;background:var(--warning)"></span><span style="height:36px;background:var(--primary)"></span></div><div class="lbl">周二</div></div>
+              <div class="col"><div class="stack" style="height:48px"><span style="height:14px;background:var(--danger)"></span><span style="height:10px;background:var(--warning)"></span><span style="height:24px;background:var(--primary)"></span></div><div class="lbl">周三</div></div>
+              <div class="col"><div class="stack" style="height:130px"><span style="height:50px;background:var(--danger)"></span><span style="height:40px;background:var(--warning)"></span><span style="height:40px;background:var(--primary)"></span></div><div class="lbl">周四</div></div>
+              <div class="col"><div class="stack" style="height:74px"><span style="height:24px;background:var(--danger)"></span><span style="height:20px;background:var(--warning)"></span><span style="height:30px;background:var(--primary)"></span></div><div class="lbl">周五</div></div>
+              <div class="col"><div class="stack" style="height:40px"><span style="height:12px;background:var(--danger)"></span><span style="height:10px;background:var(--warning)"></span><span style="height:18px;background:var(--primary)"></span></div><div class="lbl">周六</div></div>
+              <div class="col"><div class="stack" style="height:34px"><span style="height:10px;background:var(--danger)"></span><span style="height:8px;background:var(--warning)"></span><span style="height:16px;background:var(--primary)"></span></div><div class="lbl">周日</div></div>
+            </div>
+            <div class="legend" style="justify-content:center;margin-top:10px"><span><i style="background:var(--danger)"></i>勾稽/平衡</span><span><i style="background:var(--warning)"></i>成本/连续性</span><span><i style="background:var(--primary)"></i>迭代回归</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cols">
+        <!-- Top 失败规则 -->
+        <div class="card">
+          <div class="card-hd"><h3>Top 高频失败规则（近 14 天）</h3></div>
+          <div class="card-bd flush">
+            <table class="table">
+              <thead><tr><th>规则</th><th>类别</th><th>失败次数</th><th>影响客户</th><th>趋势</th></tr></thead>
+              <tbody>
+                <tr><td><div class="cell-main">逐张凭证借贷平衡</div><div class="cell-sub mono">balance.voucher_each</div></td><td><span class="tag danger">平衡</span></td><td class="strong">42</td><td>6</td><td class="text-danger">↗</td></tr>
+                <tr><td><div class="cell-main">应付明细 = 总账余额</div><div class="cell-sub mono">reconciliation.ap_control</div></td><td><span class="tag danger">勾稽</span></td><td class="strong">31</td><td>4</td><td class="text-success">↘</td></tr>
+                <tr><td><div class="cell-main">存货金额 = 数量×单价</div><div class="cell-sub mono">cost.inventory_amount</div></td><td><span class="tag warning">成本</span></td><td class="strong">28</td><td>5</td><td class="text-muted">→</td></tr>
+                <tr><td><div class="cell-main">收入指标回归</div><div class="cell-sub mono">invariant.revenue_monthly</div></td><td><span class="tag blue">回归</span></td><td class="strong">19</td><td>3</td><td class="text-danger">↗</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 行业健康度热力 -->
+        <div class="card">
+          <div class="card-hd"><h3>各行业 7 日健康度</h3><div class="spacer"></div><span class="legend"><span><i style="background:var(--success)"></i>优</span><span><i style="background:var(--warning)"></i>关注</span><span><i style="background:var(--danger)"></i>差</span></span></div>
+          <div class="card-bd">
+            <div class="fz12 text-muted mb12" style="margin-bottom:8px">行 = 行业，列 = 最近 7 天</div>
+            <div style="display:grid;grid-template-columns:70px 1fr;gap:8px;align-items:center">
+              <div class="fz13">制造业</div><div class="heat"><div class="cell" style="background:var(--success)">优</div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--warning)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div></div>
+              <div class="fz13">商贸</div><div class="heat"><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--warning)"></div><div class="cell" style="background:var(--danger)">差</div><div class="cell" style="background:var(--warning)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div></div>
+              <div class="fz13">零售</div><div class="heat"><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--warning)"></div><div class="cell" style="background:var(--warning)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div></div>
+              <div class="fz13">SaaS</div><div class="heat"><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--warning)"></div><div class="cell" style="background:var(--warning)"></div><div class="cell" style="background:var(--success)"></div></div>
+              <div class="fz13">物流</div><div class="heat"><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div><div class="cell" style="background:var(--success)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

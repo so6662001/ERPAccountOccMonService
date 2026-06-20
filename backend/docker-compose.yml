@@ -1,0 +1,23 @@
+# 本地依赖：平台库(MySQL) + Redis。业务库另行配置（只读）。
+services:
+  platform-mysql:
+    image: mysql:8.0
+    container_name: puxun-platform-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: puxun_monitor
+      TZ: UTC
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4
+    ports:
+      - "3306:3306"
+    volumes:
+      - platform-mysql-data:/var/lib/mysql
+
+  redis:
+    image: redis:7
+    container_name: puxun-redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  platform-mysql-data:

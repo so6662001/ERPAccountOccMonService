@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>组件状态参考 · 普讯科技产品应用数据监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.ob-top{height:60px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:12px}
+.ob-top .logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#3b82f6,#22d3ee);display:grid;place-items:center;color:#fff;font-weight:800}
+.wrap{max-width:1080px;margin:24px auto;padding:0 20px}
+.sec-title{font-size:13px;font-weight:700;color:var(--text-2);margin:24px 0 12px;display:flex;align-items:center;gap:8px}
+.sec-title::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--primary)}
+.empty{text-align:center;padding:36px 20px}
+.empty .ill{width:84px;height:84px;border-radius:50%;background:var(--bg);display:grid;place-items:center;margin:0 auto 16px;color:var(--muted)}
+.empty h4{margin:0 0 6px;font-size:16px}
+.empty p{margin:0 0 16px;color:var(--muted);font-size:13px}
+/* skeleton */
+.sk{background:linear-gradient(90deg,#eef1f6 25%,#f6f8fb 37%,#eef1f6 63%);background-size:400% 100%;animation:sh 1.4s ease infinite;border-radius:6px}
+@keyframes sh{0%{background-position:100% 50%}100%{background-position:0 50%}}
+.sk-line{height:12px;margin:8px 0}
+.sk-row{display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border-2)}
+.spinner{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:sp 0.8s linear infinite;margin:0 auto}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="ob-top"><div class="logo">普</div><b>组件状态参考</b><span class="tag outline" style="margin-left:6px">设计规范 · 供 Vue3 还原</span><div style="flex:1"></div><a class="btn ghost" href="index.html">返回平台</a></div>
+
+<div class="wrap">
+  <p class="text-muted fz13" style="margin-top:8px">统一约定空状态、加载态、错误态的视觉与文案，保证各页面体验一致。以下为可复用范式。</p>
+
+  <div class="sec-title">空状态 Empty States</div>
+  <div class="grid k3">
+    <div class="card"><div class="empty">
+      <div class="ill"><svg width="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+      <h4>暂无检测数据</h4><p>该客户刚接入，尚未执行首次检测</p><button class="btn primary">立即检测</button>
+    </div></div>
+    <div class="card"><div class="empty">
+      <div class="ill" style="color:var(--success)"><svg width="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg></div>
+      <h4>暂无告警</h4><p>当前所有账务检查均通过，一切正常</p><button class="btn">查看检测结果</button>
+    </div></div>
+    <div class="card"><div class="empty">
+      <div class="ill"><svg width="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+      <h4>未找到匹配结果</h4><p>没有符合「balance·v4」筛选条件的规则</p><button class="btn">清除筛选</button>
+    </div></div>
+  </div>
+
+  <div class="sec-title">加载态 Loading</div>
+  <div class="grid k2">
+    <div class="card"><div class="card-hd"><h3>表格加载骨架</h3></div><div class="card-bd">
+      <div class="sk-row"><div class="sk" style="width:40px;height:40px;border-radius:9px"></div><div style="flex:1"><div class="sk sk-line" style="width:60%"></div><div class="sk sk-line" style="width:35%"></div></div><div class="sk sk-line" style="width:60px"></div></div>
+      <div class="sk-row"><div class="sk" style="width:40px;height:40px;border-radius:9px"></div><div style="flex:1"><div class="sk sk-line" style="width:70%"></div><div class="sk sk-line" style="width:30%"></div></div><div class="sk sk-line" style="width:60px"></div></div>
+      <div class="sk-row" style="border:none"><div class="sk" style="width:40px;height:40px;border-radius:9px"></div><div style="flex:1"><div class="sk sk-line" style="width:50%"></div><div class="sk sk-line" style="width:40%"></div></div><div class="sk sk-line" style="width:60px"></div></div>
+    </div></div>
+    <div class="card"><div class="card-hd"><h3>执行中 / 加载中</h3></div><div class="card-bd" style="text-align:center;padding:40px">
+      <div class="spinner"></div>
+      <div style="margin-top:14px;font-weight:600">正在执行检测…</div>
+      <div class="hint">已完成 412 / 1,408 项 · 预计剩余 6 秒</div>
+      <div class="bar" style="max-width:280px;margin:14px auto 0"><span class="g" style="width:30%"></span></div>
+    </div></div>
+  </div>
+
+  <div class="sec-title">错误态 Error States</div>
+  <div class="grid k3">
+    <div class="card"><div class="empty">
+      <div class="ill" style="color:var(--danger);background:var(--danger-soft)"><svg width="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="m4 4 16 16"/></svg></div>
+      <h4>数据源连接失败</h4><p>cust_0145（达梦）无法连接，请检查网络或账号</p><button class="btn danger">重试连接</button>
+    </div></div>
+    <div class="card"><div class="empty">
+      <div class="ill" style="color:var(--warning);background:var(--warning-soft)"><svg width="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+      <h4>加载失败</h4><p>数据加载异常，请稍后重试</p><button class="btn">刷新</button>
+    </div></div>
+    <div class="card"><div class="empty">
+      <div class="ill"><svg width="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+      <h4>无访问权限</h4><p>你的角色（只读）无权编辑规则，请联系管理员</p><button class="btn">申请权限</button>
+    </div></div>
+  </div>
+
+  <div class="sec-title">结果反馈 Toast / Result</div>
+  <div class="grid k3">
+    <div class="card card-bd"><div class="flex" style="gap:10px"><span class="tag success" style="width:26px;height:26px;border-radius:50%;display:grid;place-items:center;padding:0">✓</span><div><b class="fz13">保存成功</b><div class="hint">规则 v4 已保存，待灰度发布</div></div></div></div>
+    <div class="card card-bd"><div class="flex" style="gap:10px"><span class="tag danger" style="width:26px;height:26px;border-radius:50%;display:grid;place-items:center;padding:0">!</span><div><b class="fz13">操作失败</b><div class="hint">SQL 语法错误，请检查左侧表达式</div></div></div></div>
+    <div class="card card-bd"><div class="flex" style="gap:10px"><span class="tag warning" style="width:26px;height:26px;border-radius:50%;display:grid;place-items:center;padding:0">⚠</span><div><b class="fz13">部分成功</b><div class="hint">套用 55/58 条，3 条因版本未达跳过</div></div></div></div>
+  </div>
+  <div style="height:30px"></div>
+</div>
+</body>
+</html>

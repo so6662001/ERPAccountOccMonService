@@ -1,0 +1,64 @@
+package com.puxun.monitor.alert.wecom;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+
+/**
+ * 企业微信 HTTP 客户端：群机器人 Webhook 推送。自建应用(APP)消息后续接入。
+ */
+@Slf4j
+@Component
+public class WecomClient {
+
+    private final HttpClient http = HttpClient.newBuilder()
+            .connectTimeout(Duration.ofSeconds(5)).build();
+
+    public record HttpResp(int status, String body) {}
+
+    private static final String BASE = "https://qyapi.weixin.qq.com/cgi-bin";
+
+    public HttpResp sendWebhook(String webhookUrl, String jsonPayload) {
+        return post(webhookUrl, jsonPayload);
+    }
+
+    /** 自建应用：用 corpid + corpsecret 换取 access_token。 */
+    public HttpResp fetchAccessToken(String corpId, String corpSecret) {
+        try {
+            String url = BASE + "/gettoken?corpid=" + corpId + "&corpsecret=" + corpSecret;
+            HttpRequest req = HttpRequest.newBuilder().uri(URI.create(url))
+                    .timeout(Duration.ofSeconds(10)).GET().build();
+            HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+            return new HttpResp(resp.statusCode(), resp.body());
+        } catch (Exception e) {
+            log.warn("获取企业微信 access_token 失败: {}", e.getMessage());
+            return new HttpResp(-1, e.getMessage());
+        }
+    }
+
+    /** 自建应用：发送应用消息。 */
+    public HttpResp sendAppMessage(String accessToken, String jsonPayload) {
+        return post(BASE + "/message/send?access_token=" + accessToken, jsonPayload);
+    }
+
+    private HttpResp post(String url, String jsonPayload) {
+        try {
+            HttpRequest req = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .timeout(Duration.ofSeconds(10))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+                    .build();
+            HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+            return new HttpResp(resp.statusCode(), resp.body());
+        } catch (Exception e) {
+            log.warn("企业微信请求失败: {}", e.getMessage());
+            return new HttpResp(-1, e.getMessage());
+        }
+    }
+}

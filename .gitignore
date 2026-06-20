@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# 运行时产物 / 演示数据 / 基线 / 报告
+*.sqlite
+baseline.json
+report.*.json
+report.*.md
+*.local.yaml

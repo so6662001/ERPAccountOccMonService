@@ -1,0 +1,44 @@
+:root {
+  --pp-sidebar-bg: #0f1d36;
+  --pp-sidebar-bg2: #16294a;
+  --pp-primary: #2563eb;
+}
+
+html, body, #app { height: 100%; margin: 0; }
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: #f3f5f9;
+  color: #1f2a44;
+}
+
+/* 侧边栏（沿用原型深色风格） */
+.app-shell { display: flex; min-height: 100vh; }
+.app-sidebar {
+  width: 230px; flex-shrink: 0; color: #c7d2e4;
+  background: linear-gradient(180deg, var(--pp-sidebar-bg), var(--pp-sidebar-bg2));
+  display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh;
+}
+.app-sidebar .brand { display: flex; align-items: center; gap: 10px; padding: 18px; border-bottom: 1px solid rgba(255,255,255,.07); }
+.app-sidebar .brand .logo { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg,#3b82f6,#22d3ee); display: grid; place-items: center; color:#fff; font-weight: 800; }
+.app-sidebar .brand b { color: #fff; font-size: 14px; }
+.app-sidebar .brand small { color: #8aa0c4; font-size: 11px; display: block; }
+.app-sidebar .el-menu { background: transparent; border-right: none; }
+.app-sidebar .el-menu-item, .app-sidebar .el-sub-menu__title { color: #b7c5dc; }
+.app-sidebar .el-menu-item.is-active { background: var(--pp-primary) !important; color: #fff !important; border-radius: 8px; margin: 2px 8px; }
+.app-sidebar .el-menu-item:hover { background: rgba(255,255,255,.06); }
+
+.app-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.app-topbar { height: 56px; background: #fff; border-bottom: 1px solid #e6eaf2; display: flex; align-items: center; gap: 14px; padding: 0 20px; }
+.app-content { padding: 18px 20px 40px; }
+.page-title { font-size: 20px; font-weight: 700; margin: 0 0 14px; }
+
+.kpi-value { font-size: 26px; font-weight: 800; }
+.muted { color: #8694ad; }
+.spacer { flex: 1; }
+
+/* 登录页 */
+.login-wrap { min-height: 100vh; display: flex; }
+.login-left { flex: 1.1; background: linear-gradient(150deg,#0f1d36,#16294a 60%,#1f3a6b); color:#fff; padding: 56px 60px; display:flex; flex-direction:column; }
+.login-left .title { font-size: 32px; font-weight: 800; margin-top: auto; }
+.login-right { width: 420px; background: #fff; display: grid; place-items: center; }
+.login-card { width: 320px; }

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>监控总览 · 普讯科技产品应用数据监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+  <!-- 侧边栏 -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">普</div>
+      <div>
+        <div class="name">普讯数据监测平台</div>
+        <div class="sub">Puxun Product Data Monitoring</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="group">监测中心</div>
+      <a class="active" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>监控总览</a>
+      <a href="tenants.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/><path d="M9 9v.01M9 13v.01M9 17v.01"/></svg>客户与租户<span class="count">36</span></a>
+      <a href="rules.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>检查规则<span class="count">128</span></a>
+      <a href="rule-templates.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>规则模板库</a>
+      <a href="results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 17l2-2 2 2 3-4"/></svg>检测结果</a>
+      <div class="group">运维与发布</div>
+      <a href="datasources.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>数据源</a>
+      <a href="tasks.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>检测任务</a>
+      <a href="baselines.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>基线管理</a>
+      <a href="rollout.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>灰度发布</a>
+      <a href="audit.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>权限与审计</a>
+      <div class="group">告警与通知</div>
+      <a href="alerts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>告警中心<span class="count danger">7</span></a>
+      <a href="wecom.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>企业微信通知</a>
+    </nav>
+    <div style="padding:14px;border-top:1px solid rgba(255,255,255,.07);font-size:12px;color:#7c90b3">
+      <div class="flex" style="gap:8px"><span class="tag success" style="background:rgba(24,160,88,.18)"><span class="dot"></span>调度引擎运行中</span></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb">监测中心 / <b>监控总览</b></div>
+      <div class="spacer"></div>
+      <div class="env-select">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        生产环境 · 华东集群
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="icon-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg><span class="dot"></span></div>
+      <a class="avatar" href="login.html" title="账户 / 退出登录">研</a>
+    </header>
+
+    <div class="content">
+      <div class="page-head">
+        <div>
+          <h1>监控总览</h1>
+          <p>云端多客户 / 多租户账务正确性实时监测 · 最近刷新 12 秒前</p>
+        </div>
+        <div class="spacer"></div>
+        <a class="btn ghost" href="onboarding.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4"/></svg>接入向导</a>
+        <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.8-3.4L23 10M1 14l4.7 4.4A9 9 0 0 0 20.5 15"/></svg>立即全量巡检</button>
+        <button class="btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>新建检测任务</button>
+      </div>
+
+      <!-- KPI -->
+      <div class="grid k4" style="margin-bottom:16px">
+        <div class="card kpi">
+          <div class="label"><span class="ic blue"><svg width="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg></span>接入客户 / 租户</div>
+          <div class="value">36 <span style="font-size:14px;color:var(--muted);font-weight:600">/ 412</span></div>
+          <div class="delta up">▲ 本周新增 3 个客户</div>
+        </div>
+        <div class="card kpi">
+          <div class="label"><span class="ic green"><svg width="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>今日检测通过率</div>
+          <div class="value">99.2%</div>
+          <div class="delta up">▲ 较昨日 +0.4%</div>
+        </div>
+        <div class="card kpi">
+          <div class="label"><span class="ic amber"><svg width="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span>今日检测执行次数</div>
+          <div class="value">8,640</div>
+          <div class="delta up">规则 128 · 平均耗时 1.3s</div>
+        </div>
+        <div class="card kpi">
+          <div class="label"><span class="ic red"><svg width="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></span>待处理告警</div>
+          <div class="value text-danger">7</div>
+          <div class="delta down">严重 2 · 高 4 · 中 1（已推送企业微信）</div>
+        </div>
+      </div>
+
+      <div class="cols" style="margin-bottom:16px">
+        <!-- 客户健康度 -->
+        <div class="card">
+          <div class="card-hd"><h3>客户 / 租户健康度</h3><div class="spacer"></div>
+            <div class="segmented"><button class="active">全部</button><button>独立库</button><button>租户隔离</button></div>
+          </div>
+          <div class="card-bd flush">
+            <table class="table">
+              <thead><tr><th>客户 / 租户</th><th>隔离模式</th><th style="width:180px">健康度</th><th>失败 / 总检查</th><th>最近检测</th><th>状态</th></tr></thead>
+              <tbody>
+                <tr><td><div class="cell-main">华东制造集团</div><div class="cell-sub">cust_0231 · MySQL</div></td><td><span class="mode-pill db">独立数据库</span></td><td><div class="bar"><span class="g" style="width:100%"></span></div></td><td>0 / 64</td><td class="muted">1 分钟前</td><td><span class="tag success"><span class="dot"></span>正常</span></td></tr>
+                <tr><td><div class="cell-main"><a href="customer-detail.html" style="color:var(--primary-600)">明远商贸</a></div><div class="cell-sub">cust_0188 · Oracle</div></td><td><span class="mode-pill db">独立数据库</span></td><td><div class="bar"><span class="r" style="width:82%"></span></div></td><td><b class="text-danger">3</b> / 58</td><td class="muted">2 分钟前</td><td><span class="tag critical"><span class="dot"></span>严重</span></td></tr>
+                <tr><td><div class="cell-main">优享零售 · 门店租户群</div><div class="cell-sub">tenant_pool_A · 142 租户</div></td><td><span class="mode-pill tenant">租户隔离</span></td><td><div class="bar"><span class="a" style="width:94%"></span></div></td><td><b class="text-warning">2</b> / 8.5k</td><td class="muted">刚刚</td><td><span class="tag warning"><span class="dot"></span>告警</span></td></tr>
+                <tr><td><div class="cell-main">恒泰物流</div><div class="cell-sub">cust_0176 · SQL Server</div></td><td><span class="mode-pill db">独立数据库</span></td><td><div class="bar"><span class="g" style="width:100%"></span></div></td><td>0 / 49</td><td class="muted">3 分钟前</td><td><span class="tag success"><span class="dot"></span>正常</span></td></tr>
+                <tr><td><div class="cell-main">云联SaaS · 标准版租户群</div><div class="cell-sub">tenant_pool_B · 268 租户</div></td><td><span class="mode-pill tenant">租户隔离</span></td><td><div class="bar"><span class="g" style="width:99%"></span></div></td><td><b class="text-warning">2</b> / 16k</td><td class="muted">1 分钟前</td><td><span class="tag warning"><span class="dot"></span>告警</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 通过率甜甜圈 + 趋势 -->
+        <div class="card">
+          <div class="card-hd"><h3>整体检测概览</h3><div class="spacer"></div><a class="btn link" href="analytics.html">趋势分析 →</a></div>
+          <div class="card-bd" style="text-align:center">
+            <div class="donut" style="margin:6px auto 14px;background:conic-gradient(var(--success) 0 92%, var(--warning) 92% 97%, var(--danger) 97% 100%)">
+              <div class="inner"><b>99.2%</b><span>通过率</span></div>
+            </div>
+            <div class="flex" style="justify-content:center;gap:18px;font-size:12.5px">
+              <span class="flex" style="gap:6px"><i style="width:9px;height:9px;border-radius:2px;background:var(--success);display:inline-block"></i>通过 8,571</span>
+              <span class="flex" style="gap:6px"><i style="width:9px;height:9px;border-radius:2px;background:var(--warning);display:inline-block"></i>告警 62</span>
+              <span class="flex" style="gap:6px"><i style="width:9px;height:9px;border-radius:2px;background:var(--danger);display:inline-block"></i>失败 7</span>
+            </div>
+            <div class="divider"></div>
+            <div style="text-align:left;color:var(--muted);font-size:12px;margin-bottom:8px">近 12 小时检测量</div>
+            <div class="spark">
+              <i style="height:40%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:70%"></i><i style="height:60%"></i><i class="hi" style="height:85%"></i><i style="height:65%"></i><i class="warn" style="height:78%"></i><i style="height:58%"></i><i style="height:72%"></i><i class="hi" style="height:90%"></i><i style="height:66%"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cols">
+        <!-- 失败检查按类别 -->
+        <div class="card">
+          <div class="card-hd"><h3>失败检查按账务类别分布（近 24h）</h3></div>
+          <div class="card-bd">
+            <table class="table" style="margin:-6px 0">
+              <tbody>
+                <tr><td style="width:160px"><span class="tag danger">借贷平衡</span></td><td><div class="bar"><span class="r" style="width:70%"></span></div></td><td style="width:40px;text-align:right" class="strong">5</td></tr>
+                <tr><td><span class="tag danger">应收应付勾稽</span></td><td><div class="bar"><span class="r" style="width:56%"></span></div></td><td style="text-align:right" class="strong">4</td></tr>
+                <tr><td><span class="tag warning">成本核算</span></td><td><div class="bar"><span class="a" style="width:42%"></span></div></td><td style="text-align:right" class="strong">3</td></tr>
+                <tr><td><span class="tag warning">余额连续性</span></td><td><div class="bar"><span class="a" style="width:28%"></span></div></td><td style="text-align:right" class="strong">2</td></tr>
+                <tr><td><span class="tag info">跨系统一致</span></td><td><div class="bar"><span class="a" style="width:14%"></span></div></td><td style="text-align:right" class="strong">1</td></tr>
+                <tr><td><span class="tag blue">迭代回归</span></td><td><div class="bar"><span class="a" style="width:28%"></span></div></td><td style="text-align:right" class="strong">2</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 最新告警时间线 -->
+        <div class="card">
+          <div class="card-hd"><h3>最新告警</h3><div class="spacer"></div><a class="btn link" href="alerts.html">查看全部 →</a></div>
+          <div class="card-bd">
+            <div class="timeline">
+              <div class="item err"><div class="flex between"><b>明远商贸 · 借贷不平</b><span class="tag critical">严重</span></div><div class="t">凭证 V20260620-088 借贷差额 ¥-1,200 · 2 分钟前 · ✅ 已推送企业微信</div></div>
+              <div class="item err"><div class="flex between"><b>优享零售 T-0098 · 应付勾稽错</b><span class="tag critical">严重</span></div><div class="t">明细合计 ≠ 总账余额，差额 ¥850 · 18 分钟前 · ✅ 已推送</div></div>
+              <div class="item warn"><div class="flex between"><b>云联SaaS T-1203 · 收入指标回归</b><span class="tag warning">高</span></div><div class="t">迭代 v3.8 后该期收入由基线变动 ¥2,000 · 1 小时前 · ✅ 已推送</div></div>
+              <div class="item warn"><div class="flex between"><b>优享零售 · 成本金额异常</b><span class="tag warning">高</span></div><div class="t">3 笔存货金额 ≠ 数量×单价 · 2 小时前 · ✅ 已推送</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录 · 普讯科技产品应用数据监测平台</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+body{background:#0f1d36}
+.login-wrap{min-height:100vh;display:flex}
+.login-left{flex:1.1;background:linear-gradient(150deg,#0f1d36,#16294a 60%,#1f3a6b);color:#fff;padding:56px 60px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.login-left::after{content:"";position:absolute;right:-120px;bottom:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,.35),transparent 70%)}
+.lbrand{display:flex;align-items:center;gap:12px}
+.lbrand .logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#22d3ee);display:grid;place-items:center;font-weight:800;font-size:18px;box-shadow:0 6px 18px rgba(59,130,246,.5)}
+.lbrand b{font-size:18px}.lbrand .sub{font-size:12px;color:#8aa0c4}
+.ltitle{margin-top:auto;font-size:34px;font-weight:800;line-height:1.3;letter-spacing:-.5px}
+.ltitle span{background:linear-gradient(90deg,#7dd3fc,#a5b4fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lsub{color:#aab9d6;margin-top:14px;font-size:14px;line-height:1.8;max-width:440px}
+.lfeat{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;margin-bottom:auto}
+.lfeat .chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 12px;font-size:12.5px;color:#cfdcf2;display:flex;align-items:center;gap:7px}
+.lstat{display:flex;gap:34px;margin-top:30px}
+.lstat .n{font-size:24px;font-weight:800}.lstat .t{font-size:12px;color:#8aa0c4}
+.login-right{width:480px;background:#fff;display:flex;align-items:center;justify-content:center;padding:40px}
+.login-card{width:100%;max-width:340px}
+.login-card h2{font-size:22px;margin:0 0 4px}
+.login-card .tip{color:var(--muted);font-size:13px;margin-bottom:22px}
+.ltabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border)}
+.ltabs button{flex:1;border:none;background:none;padding:10px;font-size:14px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer}
+.ltabs button.active{color:var(--primary-600);border-bottom-color:var(--primary)}
+.lfield{margin-bottom:16px}
+.lfield label{font-size:13px;font-weight:600;color:var(--text-2);display:block;margin-bottom:7px}
+.lfield .box{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:9px;padding:11px 13px}
+.lfield .box:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.lfield .box input{border:none;outline:none;flex:1;font-size:14px}
+.lfield .box svg{color:var(--muted)}
+.qr{width:180px;height:180px;margin:6px auto 14px;border:1px solid var(--border);border-radius:12px;display:grid;place-items:center;background:repeating-linear-gradient(45deg,#f3f5f9,#f3f5f9 6px,#fff 6px,#fff 12px);position:relative}
+.qr .qico{width:54px;height:54px;border-radius:12px;background:#2aae67;display:grid;place-items:center;color:#fff;font-weight:700}
+</style>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-left">
+    <div class="lbrand"><div class="logo">普</div><div><b>普讯数据监测平台</b><div class="sub">Puxun Product Data Monitoring Platform</div></div></div>
+    <div class="ltitle">守住<span>账务正确性</span>这条底线<br>让每一次迭代都安心</div>
+    <div class="lsub">面向云化多客户 / 多租户场景，声明式约束 + 迭代回归防护，发现问题即推送企业微信，把研发迭代引入的账务风险挡在生产之外。</div>
+    <div class="lfeat">
+      <span class="chip">✓ 借贷平衡 / 勾稽 / 连续性</span>
+      <span class="chip">✓ 成本与利润口径</span>
+      <span class="chip">✓ 迭代回归防护</span>
+      <span class="chip">✓ 企业微信告警</span>
+      <span class="chip">✓ 灰度分批生效</span>
+    </div>
+    <div class="lstat">
+      <div><div class="n">36</div><div class="t">接入客户/租户</div></div>
+      <div><div class="n">128</div><div class="t">检查规则</div></div>
+      <div><div class="n">99.2%</div><div class="t">今日通过率</div></div>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-card">
+      <h2>欢迎登录</h2>
+      <div class="tip">请使用企业账号登录监测平台</div>
+      <div class="ltabs"><button class="active" onclick="sw('pwd',this)">账号密码</button><button onclick="sw('qr',this)">企业微信扫码</button></div>
+
+      <div id="pwd">
+        <div class="lfield"><label>账号</label><div class="box"><svg width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><input value="research.lead@company.com"></div></div>
+        <div class="lfield"><label>密码</label><div class="box"><svg width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><input type="password" value="••••••••••"></div></div>
+        <div class="flex between" style="margin-bottom:18px;font-size:13px"><label class="flex" style="gap:6px"><span class="switch" style="width:34px;height:20px"></span>记住我</label><a style="color:var(--primary-600)">忘记密码？</a></div>
+        <a class="btn primary" href="index.html" style="width:100%;justify-content:center;padding:11px">登录</a>
+      </div>
+
+      <div id="qr" style="display:none;text-align:center">
+        <div class="qr"><div class="qico">企</div></div>
+        <div class="fz13 text-muted">打开企业微信，扫一扫登录</div>
+        <div class="fz12 text-muted" style="margin-top:6px">需管理员在企业微信后台授权应用</div>
+        <a class="btn" href="index.html" style="width:100%;justify-content:center;margin-top:16px">已扫码，进入平台</a>
+      </div>
+
+      <div class="fz12 text-muted" style="text-align:center;margin-top:26px">© 2026 普讯数据监测平台 · 仅授权人员访问</div>
+    </div>
+  </div>
+</div>
+<script>
+function sw(id,btn){
+  document.getElementById('pwd').style.display = id==='pwd'?'block':'none';
+  document.getElementById('qr').style.display = id==='qr'?'block':'none';
+  document.querySelectorAll('.ltabs button').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
