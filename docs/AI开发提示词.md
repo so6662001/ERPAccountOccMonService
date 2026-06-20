@@ -7,7 +7,13 @@
 > 配套：高保真原型在 `prototype/`（22 页，从 `login.html` 进入）；账务校验方法论在 `docs/ARCHITECTURE.md`；可运行的校验引擎参考实现在 `erp_acc_monitor/`（Python，仅供逻辑参考）。
 >
 > 项目规则（Cursor 自动加载）：`.cursor/rules/`（总纲、只读安全与多租户、后端、前端）。
-> 核心模块方法/类级详设：`docs/模块详设-规则引擎.md`、`docs/模块详设-灰度发布引擎.md`。
+> 核心模块方法/类级详设（开发对应模块前必读）：
+> - `docs/模块详设-多数据源动态路由.md`（§5.2）
+> - `docs/模块详设-规则引擎.md`（§5.5）
+> - `docs/模块详设-调度.md`（§5.6）
+> - `docs/模块详设-基线与回归.md`（§5.8）
+> - `docs/模块详设-灰度发布引擎.md`（§5.9）
+> - `docs/模块详设-企业微信推送.md`（§5.10）
 
 ---
 
@@ -215,6 +221,7 @@ sys_user / sys_role / sys_user_role / role_permission；内置角色：ADMIN/RES
 数据源 CRUD + 连接测试 + 批量探活。租户隔离模式记录 tenant_column。
 接口：CRUD /datasources，POST /datasources/{id}/test，POST /datasources/probe。
 ```
+> 方法/类级详设见 `docs/模块详设-多数据源动态路由.md`。
 
 ### 5.3 客户与租户（tenant）
 ```
@@ -248,6 +255,7 @@ sys_user / sys_role / sys_user_role / role_permission；内置角色：ADMIN/RES
 实现：Quartz/XXL-Job 调度 detect_task；触发类型 CRON/EVENT(结账事件)/CI_GATE(发布前 Webhook)/MANUAL；独立库按客户并行、租户群聚合扫描；结账高峰错峰与并发上限；失败重试2次后转告警；记录执行历史与下次执行时间；分布式锁防重复执行。
 接口：CRUD /tasks, POST /tasks/{id}/run, POST /tasks/{id}/pause|resume, POST /ci-gate/run(供流水线调用,返回门禁结果与退出码语义)。
 ```
+> 方法/类级详设见 `docs/模块详设-调度.md`。
 
 ### 5.7 检测结果（result）
 ```
@@ -260,6 +268,7 @@ sys_user / sys_role / sys_user_role / role_permission；内置角色：ADMIN/RES
 实现：从一次运行抽取 invariant 指标生成 baseline；审定流程(PENDING->AUDITED，仅 FINANCE/ADMIN)；回归对比：当前不变量指标 vs 已审定基线，abs(diff)>tolerance→REGRESSION；已结账期间锁定基线；"重置基线"需审定并审计。回归发现并入 detect_run 参与门禁。
 接口：CRUD /baselines, POST /baselines/snapshot, POST /baselines/{id}/audit, POST /runs/{id}/regression?baselineId=。
 ```
+> 方法/类级详设见 `docs/模块详设-基线与回归.md`。
 
 ### 5.9 灰度发布与模板差异同步（rollout）
 ```
@@ -282,6 +291,7 @@ sys_user / sys_role / sys_user_role / role_permission；内置角色：ADMIN/RES
 告警处置闭环：认领/转交/标记闭环(PENDING->PROCESSING->CLOSED)；移动端 API。
 接口：GET /alerts, POST /alerts/{id}/claim|transfer|close, CRUD /alert-channels, POST /alert-channels/{id}/test, GET /mobile/alerts。
 ```
+> 方法/类级详设见 `docs/模块详设-企业微信推送.md`。
 
 ### 5.11 趋势统计与审计（analytics / audit）
 ```
